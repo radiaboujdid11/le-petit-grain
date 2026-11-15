@@ -1,0 +1,10 @@
+<!-- Favicon (icône de l'onglet). Même dessin que BeanIcon.tsx, mais en couleurs fixes :
+     un fichier .svg utilisé comme favicon ne connaît pas la couleur du texte de la page.
+     Fond Dark Cocoa arrondi pour rester lisible sur les onglets clairs comme sombres. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" rx="10" fill="#211710" />
+  <g transform="rotate(30 24 24)" fill="none" stroke="#D7B98D" stroke-width="2.5" stroke-linecap="round">
+    <ellipse cx="24" cy="24" rx="12" ry="17.5" />
+    <path d="M24 8 C 16.5 17, 31.5 31, 24 40" />
+  </g>
+</svg>

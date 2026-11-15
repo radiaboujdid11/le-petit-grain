@@ -1,26 +1,45 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Design system « Warm Dark Luxury » — Le Petit Grain
+
+  Tout ce qui est déclaré dans @theme devient automatiquement des classes Tailwind.
+  Exemple : --color-toffee  →  text-toffee, bg-toffee, border-toffee…
+
+  Règles de contraste (WCAG AA : au moins 4,5:1 pour le texte courant)
+  ┌───────────────────┬────────────────────────────────────────────────────┐
+  │ Fond              │ Couleurs de texte autorisées                       │
+  ├───────────────────┼────────────────────────────────────────────────────┤
+  │ cocoa  (#211710)  │ vanilla 14,3 · cream 9,4 · toffee 5,3              │
+  │ chocolate(#493020)│ vanilla 9,9 · cream 6,5   (toffee 3,7 : NON)       │
+  │ vanilla (#F2E6D5) │ cocoa 14,3 · chocolate 9,9 · caramel 5,3           │
+  └───────────────────┴────────────────────────────────────────────────────┘
+  Caramel sur fond sombre (2,7) : bordures et décoration uniquement.
+*/
+@theme {
+  /* Palette */
+  --color-cocoa: #211710;      /* fond principal du site */
+  --color-chocolate: #493020;  /* fonds secondaires : cartes, sections */
+  --color-caramel: #805333;    /* bordures, filets décoratifs */
+  --color-toffee: #b9824e;     /* texte d'accent, sur fond cocoa seulement */
+  --color-cream: #d7b98d;      /* texte d'accent, titres secondaires */
+  --color-vanilla: #f2e6d5;    /* texte principal */
+
+  /* Polices : les variables --font-cormorant et --font-dm-sans
+     sont créées par next/font dans layout.tsx */
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Styles de base appliqués à toute la page */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cocoa);
+  color: var(--color-vanilla);
+  font-family: var(--font-sans);
+}
+
+/* Couleur de sélection du texte, assortie à la palette */
+::selection {
+  background-color: var(--color-cream);
+  color: var(--color-cocoa);
 }

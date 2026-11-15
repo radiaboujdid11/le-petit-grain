@@ -1,0 +1,24 @@
+# Fichiers ignorés pour tout le dépôt
+# (frontend/ a aussi son propre .gitignore généré par Next.js)
+
+# Secrets : jamais versionnés (seul .env.example l'est)
+.env
+.env.*
+!.env.example
+
+# Python (backend)
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node (frontend)
+node_modules/
+
+# Éditeurs et système
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

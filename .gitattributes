@@ -1,0 +1,11 @@
+# Fins de ligne : Git stocke tous les fichiers texte avec LF (format Linux),
+# celui des serveurs Vercel et Render. Évite l'avertissement « LF will be replaced by CRLF ».
+* text=auto eol=lf
+
+# Fichiers binaires : jamais modifiés
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff2 binary

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { ArrowRight } from "lucide-react";
 import { BeanIcon } from "@/components/brand/BeanIcon";
 import { Button } from "@/components/ui/Button";
@@ -8,22 +8,36 @@ import { Button } from "@/components/ui/Button";
 // Le texte est en HTML, jamais dans l'image.
 // Animations : zoom lent de la photo (Ken Burns) + textes qui montent l'un après l'autre.
 
+// « Direction artistique » : une photo différente selon l'écran.
+// - Ordinateur / tablette (≥ 750px) : version paysage 1920x1080
+//   (la photo est prise vue de dessus : tournée de 90°, elle reste naturelle)
+// - Mobile : version verticale 736x1308
+// getImageProps prépare les fichiers optimisés ; <picture> laisse le navigateur
+// choisir et ne télécharger QUE la bonne version.
+const common = { alt: "", sizes: "100vw", quality: 90 }; // alt vide : photo décorative
+const {
+  props: { srcSet: desktopSrcSet },
+} = getImageProps({ ...common, src: "/images/hero/hero-latte-desktop.webp", width: 1920, height: 1080 });
+const {
+  props: { srcSet: mobileSrcSet, ...imgProps },
+} = getImageProps({ ...common, src: "/images/hero/hero-latte-mobile.webp", width: 736, height: 1308 });
+
 export function Hero() {
   return (
     // 100svh - 5rem : toute la hauteur de l'écran moins le header (80px).
     // svh = hauteur « petite » de l'écran : correcte sur mobile même avec la barre du navigateur.
     <section className="relative flex h-[calc(100svh-5rem)] min-h-[520px] items-center justify-center overflow-hidden">
-      <Image
-        src="/images/hero/hero-cafe.webp"
-        alt="" // décorative : le message est porté par le texte
-        fill
-        sizes="100vw"
-        quality={90}
-        fetchPriority="high" // image principale de la page : chargée en priorité
-        // object-[37%_center] : sur mobile (écran vertical), on centre la tasse
-        // plutôt que le vase ; sur ordinateur, toute la largeur est visible.
-        className="photo animate-kenburns object-cover object-[37%_center] md:object-center"
-      />
+      <picture>
+        <source media="(min-width: 750px)" srcSet={desktopSrcSet} />
+        <source srcSet={mobileSrcSet} />
+        {/* <img> classique, mais avec les fichiers optimisés préparés par getImageProps */}
+        <img
+          {...imgProps}
+          alt=""
+          fetchPriority="high" // image principale de la page : chargée en priorité
+          className="photo absolute inset-0 h-full w-full animate-kenburns object-cover"
+        />
+      </picture>
       {/* Voile sombre pour la lisibilité du texte (cocoa à 55 %) */}
       <div className="absolute inset-0 bg-cocoa/55" aria-hidden="true" />
 

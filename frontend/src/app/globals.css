@@ -29,6 +29,49 @@
      sont créées par next/font dans layout.tsx */
   --font-serif: var(--font-cormorant), Georgia, serif;
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+
+  /* Points de rupture (skill) : tablette 750px, ordinateur 990px.
+     Remplacent ceux de Tailwind : md: = dès 750px, lg: = dès 990px */
+  --breakpoint-md: 46.875rem;
+  --breakpoint-lg: 61.875rem;
+
+  /* Animations (skill) : UNE seule courbe pour tout le site → classe ease-brand.
+     Durées : 200 (survols), 300 (détails), 600 (entrées de section). */
+  --ease-brand: cubic-bezier(0, 0, 0.3, 1);
+
+  /* Ombre de « montée » des boutons au survol → classe shadow-lift */
+  --shadow-lift: 0 6px 16px rgb(0 0 0 / 0.35);
+
+  /* Animations du hero (skill) → classes animate-kenburns et animate-rise-in */
+  --animate-kenburns: kenburns 12s cubic-bezier(0, 0, 0.3, 1) forwards;
+  --animate-rise-in: rise-in 0.9s cubic-bezier(0, 0, 0.3, 1) both;
+
+  /* Zoom lent sur la photo du hero (effet « Ken Burns ») */
+  @keyframes kenburns {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+  /* Le texte monte doucement en apparaissant */
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* Filtre commun à toutes les photos (skill) : même ambiance d'une image à l'autre */
+.photo {
+  filter: saturate(0.95) contrast(1.02);
+}
+
+/* Accessibilité : si le visiteur a demandé « réduire les animations »
+   dans son système, on les coupe toutes. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* Styles de base appliqués à toute la page */

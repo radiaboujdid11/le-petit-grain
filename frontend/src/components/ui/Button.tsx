@@ -9,9 +9,12 @@ type Variant = "primary" | "secondary" | "ghost";
 type Size = "md" | "lg";
 
 // Classes communes à tous les boutons
+// Style du skill : MAJUSCULES espacées ; au survol, légère montée + ombre (200 ms).
+// Forme en pilule conservée (choix « pas de carrés »).
 const base =
   "inline-flex items-center justify-center gap-2 rounded-full font-medium " +
-  "transition-colors duration-300 " +
+  "uppercase tracking-[0.08em] " +
+  "transition duration-200 ease-brand hover:-translate-y-0.5 hover:shadow-lift " +
   // Contour visible quand on navigue au clavier (Tab) : accessibilité
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream " +
   "disabled:pointer-events-none disabled:opacity-50";
@@ -22,12 +25,13 @@ const variants: Record<Variant, string> = {
   // Contour : texte crème, se remplit au survol
   secondary: "border border-cream text-cream hover:bg-cream hover:text-cocoa",
   // Discret : simple texte, pour les actions secondaires
-  ghost: "text-cream hover:text-vanilla",
+  // Discret : pas de montée ni d'ombre (shadow-none, translate-y-0)
+  ghost: "text-cream hover:text-vanilla hover:translate-y-0 hover:shadow-none",
 };
 
 const sizes: Record<Size, string> = {
-  md: "h-11 px-6 text-sm", // 44 px de haut : taille minimale conseillée au doigt
-  lg: "h-13 px-8 text-base",
+  md: "h-11 px-6 text-xs", // 44 px de haut : taille minimale conseillée au doigt
+  lg: "h-13 px-8 text-sm",
 };
 
 type ButtonProps = {

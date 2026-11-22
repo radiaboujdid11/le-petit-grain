@@ -169,3 +169,16 @@ avec un verrou PostgreSQL, pour gérer deux demandes simultanées.
 ## 6. Tests
 - Backend : pytest + base PostgreSQL de test, vidée entre chaque test.
 - Frontend : Vitest (fonctions, composants), Playwright à partir de la phase 4 (parcours complets).
+
+## 7. Évolutions par rapport à la phase 0
+
+| Sujet | Décision finale |
+|---|---|
+| URL de l'admin | `/fr/admin` (groupe de routes `(admin)`), interface en français uniquement |
+| Pages publiques | groupe de routes `(site)` : header, pied de page, bandeau d'annonce, bouton WhatsApp |
+| Limitation des requêtes | limiteur maison en mémoire (`app/core/rate_limit.py`) au lieu de slowapi |
+| Erreurs de validation (422) | `{ code: "VALIDATION_ERROR", message, fields: [...] }`, message traduit |
+| Cache du menu | `"use cache"` + `cacheTag("menu")`, vidé par une Server Action protégée (`updateTag`) |
+| Langue côté serveur | `next/root-params` (Next.js 16.3+) |
+| Paramètres de la boutique | table `shop_settings` (+ `reservation_days_ahead`, `pickup_days_ahead`) |
+| Hébergement de la base | Neon conseillé (persistant), backend sur Render via `render.yaml` |

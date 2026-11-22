@@ -7,6 +7,7 @@ et la valeur est lue dans l'environnement (ex. FRONTEND_ORIGIN) puis validée.
 from functools import lru_cache
 from typing import Literal
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -25,6 +26,16 @@ class Settings(BaseSettings):
     rate_limit_enabled: bool = True
     # Durée d'une session admin
     admin_session_days: int = 7
+
+    @field_validator("database_url")
+    @classmethod
+    def use_psycopg_driver(cls, url: str) -> str:
+        """Render / Neon fournissent « postgres://… » ou « postgresql://… » :
+        on précise le pilote psycopg 3 attendu par SQLAlchemy."""
+        for prefix in ("postgres://", "postgresql://"):
+            if url.startswith(prefix):
+                return "postgresql+psycopg://" + url[len(prefix):]
+        return url
 
     @property
     def secure_cookies(self) -> bool:

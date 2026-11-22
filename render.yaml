@@ -1,0 +1,21 @@
+# Déploiement du BACKEND sur Render (« Blueprint ») : Render lit ce fichier à la création.
+# La base PostgreSQL est hébergée à part (Neon conseillé, voir README) : DATABASE_URL à renseigner.
+services:
+  - type: web
+    name: le-petit-grain-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    # Installe les dépendances puis applique les migrations (création/mise à jour des tables)
+    buildCommand: pip install -r requirements.txt && alembic upgrade head
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.1"
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        sync: false # secret : à saisir dans le tableau de bord Render
+      - key: FRONTEND_ORIGIN
+        sync: false # ex. https://le-petit-grain.vercel.app

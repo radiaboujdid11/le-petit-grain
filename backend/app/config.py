@@ -21,6 +21,15 @@ class Settings(BaseSettings):
     # Adresse de la base PostgreSQL (format SQLAlchemy, pilote psycopg 3).
     # Valeur par défaut = base locale de docker-compose.yml ; en production, fournie par .env
     database_url: str = "postgresql+psycopg://lpg:lpg_dev_password@localhost:5432/lepetitgrain"
+    # Limitation des requêtes (désactivée dans la plupart des tests)
+    rate_limit_enabled: bool = True
+    # Durée d'une session admin
+    admin_session_days: int = 7
+
+    @property
+    def secure_cookies(self) -> bool:
+        """Cookies « Secure » (HTTPS uniquement) en production."""
+        return self.environment == "production"
 
 
 @lru_cache  # le fichier .env n'est lu qu'une seule fois

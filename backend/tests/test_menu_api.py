@@ -3,17 +3,10 @@
 import pytest
 from sqlalchemy import func, select
 
-from app.database import get_db
 from app.models import Category, Product
 from scripts.seed_menu import CATEGORIES, PRODUCTS, seed_menu
 
 
-@pytest.fixture
-def api(client, db_session):
-    """Client dont l'API utilise la session de test (transaction annulée après le test)."""
-    seed_menu(db_session)
-    client.app.dependency_overrides[get_db] = lambda: db_session
-    return client
 
 
 # ---------- Catégories ----------

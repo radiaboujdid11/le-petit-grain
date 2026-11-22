@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.core.errors import register_error_handlers
-from app.routers import health, menu
+from app.routers import admin, health, menu, orders, reservations, shop
 
 settings = get_settings()
 
@@ -20,7 +20,7 @@ app = FastAPI(title=settings.app_name, version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[settings.frontend_origin],
-    allow_credentials=True,  # nécessaire plus tard pour le cookie de session admin
+    allow_credentials=True,  # autorise le cookie de session admin
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -31,3 +31,7 @@ register_error_handlers(app)
 # Toutes les routes sont préfixées par /api/v1 (voir docs/ARCHITECTURE.md)
 app.include_router(health.router, prefix="/api/v1")
 app.include_router(menu.router, prefix="/api/v1")
+app.include_router(shop.router, prefix="/api/v1")
+app.include_router(orders.router, prefix="/api/v1")
+app.include_router(reservations.router, prefix="/api/v1")
+app.include_router(admin.router, prefix="/api/v1")

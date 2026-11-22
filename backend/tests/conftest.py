@@ -9,6 +9,7 @@ from pathlib import Path
 
 # À faire AVANT d'importer l'application : la configuration est lue à l'import.
 os.environ["ENVIRONMENT"] = "test"
+os.environ["RATE_LIMIT_ENABLED"] = "false"  # limité seulement dans le test dédié
 os.environ.setdefault(
     "DATABASE_URL",
     "postgresql+psycopg://lpg:lpg_dev_password@localhost:5432/lepetitgrain_test",
@@ -20,7 +21,7 @@ from alembic.config import Config  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
 from sqlalchemy.orm import Session  # noqa: E402
 
-from app.database import engine  # noqa: E402
+from app.database import engine, get_db  # noqa: E402
 from app.main import app  # noqa: E402
 
 ALEMBIC_INI = Path(__file__).resolve().parent.parent / "alembic.ini"
@@ -60,3 +61,14 @@ def client():
     with TestClient(app) as test_client:
         yield test_client
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def api(client, db_session):
+    """Client dont l'API utilise la session de test (transaction annulée après le test),
+    avec le vrai menu déjà en base."""
+    from scripts.seed_menu import seed_menu
+
+    seed_menu(db_session)
+    client.app.dependency_overrides[get_db] = lambda: db_session
+    return client

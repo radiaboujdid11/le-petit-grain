@@ -37,8 +37,8 @@ export default async function MenuPage() {
       <header className="flex flex-col items-center gap-3 pt-14 pb-10 text-center">
         <BeanIcon className="h-12 w-12 text-cream" />
         <p className="text-[11px] uppercase tracking-[0.3em] text-toffee">{t("eyebrow")}</p>
-        <h1 className="font-serif text-5xl font-medium tracking-[0.04em]">{t("title")}</h1>
-        <p className="font-serif text-xl text-cream italic">{t("subtitle")}</p>
+        <h1 className="font-serif text-4xl uppercase tracking-[0.12em] sm:text-5xl">{t("title")}</h1>
+        <p className="font-serif text-sm uppercase tracking-[4px] text-cream">{t("subtitle")}</p>
 
         <div className="relative mt-8 h-80 w-60">
           <span

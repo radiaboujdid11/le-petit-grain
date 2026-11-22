@@ -25,10 +25,11 @@
   --color-cream: #d7b98d;      /* texte d'accent, titres secondaires */
   --color-vanilla: #f2e6d5;    /* texte principal */
 
-  /* Polices : les variables --font-cormorant et --font-dm-sans
-     sont créées par next/font dans layout.tsx */
-  --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  /* Police (skill, style B) : Marcellus partout, titres comme texte.
+     La variable --font-marcellus est créée par next/font dans layout.tsx.
+     font-serif et font-sans pointent toutes deux vers elle. */
+  --font-serif: var(--font-marcellus), Georgia, serif;
+  --font-sans: var(--font-marcellus), Georgia, serif;
 
   /* Points de rupture (skill) : tablette 750px, ordinateur 990px.
      Remplacent ceux de Tailwind : md: = dès 750px, lg: = dès 990px */
@@ -79,6 +80,10 @@ body {
   background-color: var(--color-cocoa);
   color: var(--color-vanilla);
   font-family: var(--font-sans);
+  /* Texte courant du skill : 16px, interligne 26px */
+  line-height: 1.625;
+  /* Marcellus n'a qu'une graisse : le navigateur ne fabrique ni faux gras ni faux italique */
+  font-synthesis: none;
 }
 
 /* Couleur de sélection du texte, assortie à la palette */

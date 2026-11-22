@@ -27,7 +27,7 @@ export default function ErrorPage({ error, retry }: ErrorPageProps) {
     <main className="flex flex-1 flex-col items-center justify-center px-6 py-28 text-center">
       <BeanIcon className="h-12 w-12 text-cream" />
       <p className="mt-6 text-[11px] uppercase tracking-[0.3em] text-toffee">{t("eyebrow")}</p>
-      <h1 className="mt-4 max-w-xl font-serif text-4xl leading-tight font-medium sm:text-5xl">{t("title")}</h1>
+      <h1 className="mt-4 max-w-xl font-serif text-3xl leading-tight uppercase tracking-[0.1em] sm:text-4xl">{t("title")}</h1>
       <p className="mt-5 max-w-md leading-relaxed text-vanilla/80">{t("text")}</p>
 
       <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">

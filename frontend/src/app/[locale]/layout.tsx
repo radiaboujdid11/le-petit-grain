@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Marcellus } from "next/font/google";
 import { notFound } from "next/navigation";
 import { locale as rootLocale } from "next/root-params";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -8,19 +8,13 @@ import { CartProvider } from "@/components/cart/CartProvider";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
-// Police des titres et du logo.
-// Elle n'est pas « variable » : on choisit donc les graisses et styles utilisés.
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+// Police unique du site (skill boutique-gourmande, style B : « Marcellus partout »).
+// Serif aux capitales gravées : élégante en MAJUSCULES espacées comme en texte courant.
+// Une seule graisse existe (400) : pas de faux gras (font-synthesis: none dans globals.css).
+const marcellus = Marcellus({
+  variable: "--font-marcellus",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-});
-
-// Police du texte et de l'interface (police « variable » : toutes les graisses incluses).
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
+  weight: "400",
 });
 
 // Les langues à préparer à l'avance (obligatoire avec cacheComponents)
@@ -41,7 +35,7 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
 
   return (
     // lang="fr" ou "en" : indispensable pour les lecteurs d'écran et Google
-    <html lang={locale} className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}>
+    <html lang={locale} className={`${marcellus.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         {/* Rend les traductions disponibles aussi dans les Client Components */}
         <NextIntlClientProvider>

@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: PageProps<"/[locale]/menu/
 
         <div>
           <p className="text-[11px] uppercase tracking-[0.3em] text-toffee">{product.category.name}</p>
-          <h1 className="mt-3 font-serif text-5xl leading-tight font-medium">{product.name}</h1>
+          <h1 className="mt-3 font-serif text-3xl leading-tight uppercase tracking-[0.1em] sm:text-4xl">{product.name}</h1>
           {product.is_bestseller && (
             <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-cream">✦ {tMenu("bestseller")}</p>
           )}

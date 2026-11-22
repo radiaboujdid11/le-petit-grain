@@ -49,7 +49,7 @@ export function Hero() {
         <p className="mt-6 animate-rise-in text-xs uppercase tracking-[0.3em] text-cream [animation-delay:100ms]">
           {t("eyebrow")}
         </p>
-        <h1 className="mt-5 animate-rise-in font-serif text-5xl leading-tight font-medium text-vanilla [animation-delay:200ms] sm:text-7xl">
+        <h1 className="mt-5 animate-rise-in font-serif text-4xl leading-tight uppercase tracking-[0.08em] text-vanilla [animation-delay:200ms] sm:text-6xl">
           {t("title")}
         </h1>
         {/* Slogan très espacé (skill : letter-spacing 4px) */}

@@ -34,7 +34,7 @@ export function MenuItem({ product }: { product: Product }) {
       )}
 
       <div className="flex items-baseline gap-3">
-        <h3 className="font-serif text-[22px] leading-tight font-medium">
+        <h3 className="font-serif text-lg leading-snug uppercase tracking-[0.08em]">
           <Link href={`/menu/${product.slug}`} className="transition-colors duration-200 hover:text-cream">
             {product.name}
           </Link>

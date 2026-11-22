@@ -109,7 +109,7 @@ export function DrinkShowcase() {
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.h3
             key={flavor.id}
-            className="text-center font-serif text-4xl sm:text-5xl"
+            className="text-center font-serif text-3xl uppercase tracking-[0.1em] sm:text-4xl"
             initial={{ x: "70%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "-70%", opacity: 0 }}

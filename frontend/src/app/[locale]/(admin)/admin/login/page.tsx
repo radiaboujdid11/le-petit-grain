@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
       <form onSubmit={submit} className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
           <BeanIcon className="h-12 w-12 text-cream" />
-          <h1 className="font-serif text-4xl">Espace admin</h1>
+          <h1 className="font-serif text-3xl uppercase tracking-[0.1em]">Espace admin</h1>
           <p className="text-sm text-vanilla/70">Le Petit Grain</p>
         </div>
         <Field label="E-mail" name="email" type="email" required autoComplete="username" />

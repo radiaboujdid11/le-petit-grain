@@ -51,7 +51,7 @@ export function Footer() {
         {/* Logo + slogan */}
         <div className="flex flex-col items-center text-center text-cream">
           <Logo variant="stacked" />
-          <p className="mt-6 font-serif text-xl text-vanilla/90 italic">A little moment of joy.</p>
+          <p className="mt-6 font-serif text-sm uppercase tracking-[4px] text-vanilla/90">A little moment of joy.</p>
         </div>
 
         {/* Séparateur : trait · grain · trait */}

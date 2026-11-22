@@ -38,7 +38,7 @@ export function OrderView() {
     <div className="mx-auto flex max-w-xl flex-col items-center py-14 text-center">
       <BeanIcon className="h-12 w-12 text-cream" />
       <p className="mt-6 text-[11px] uppercase tracking-[0.3em] text-toffee">{t("eyebrow")}</p>
-      <h1 className="mt-3 font-serif text-4xl font-medium sm:text-5xl">{t("title")}</h1>
+      <h1 className="mt-3 font-serif text-3xl uppercase tracking-[0.1em] sm:text-4xl">{t("title")}</h1>
 
       {/* Numéro de commande dans un cercle (à montrer au comptoir) */}
       <div className="mt-10 flex h-44 w-44 flex-col items-center justify-center rounded-full border border-caramel">

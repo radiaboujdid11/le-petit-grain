@@ -84,7 +84,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 export function AdminTitle({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-caramel/40 pb-4">
-      <h1 className="font-serif text-4xl">{title}</h1>
+      <h1 className="font-serif text-3xl uppercase tracking-[0.1em]">{title}</h1>
       {children}
     </div>
   );

@@ -1,0 +1,12 @@
+# Dépendances du backend (versions exactes : tout le monde installe la même chose)
+# Installation : python -m pip install -r requirements.txt
+
+# Application
+fastapi==0.165.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.4
+pydantic-settings==2.16.3
+
+# Tests
+pytest==9.2.0
+httpx2==2.16.2  # client HTTP utilisé par TestClient (remplace httpx, déprécié par Starlette)

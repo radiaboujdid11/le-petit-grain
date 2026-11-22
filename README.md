@@ -7,6 +7,8 @@ Le Petit Grain est une application web complète : site vitrine bilingue (FR/EN)
 à une base de données, **commande à emporter** avec choix du créneau de retrait, **réservation de
 table sans surréservation**, et **espace d'administration** avec tableau de bord des ventes.
 
+**Site en ligne : https://le-petit-grain-nvgc.vercel.app**
+
 ---
 
 ## Aperçu
@@ -123,11 +125,14 @@ cd frontend && npm test        # 53 tests
 
 | Service | Rôle |
 |---|---|
-| **Vercel** | frontend (dossier `frontend/`), variable `API_URL` = adresse du backend |
-| **Render** | backend, configuré par [`render.yaml`](render.yaml) (migrations au déploiement) |
-| **Neon** | PostgreSQL gratuit et persistant, variable `DATABASE_URL` sur Render |
+| **Vercel** (projet 1, dossier `frontend/`) | le site Next.js ; variable `API_URL` = adresse du backend |
+| **Vercel** (projet 2, dossier `backend/`) | l'API FastAPI en fonction Python (point d'entrée [`backend/index.py`](backend/index.py)) ; variables `DATABASE_URL`, `ENVIRONMENT=production`, `FRONTEND_ORIGIN` |
+| **Neon** | PostgreSQL gratuit et persistant |
 
-Après le premier déploiement : lancer `seed_menu`, `seed_demo` et `create_admin` depuis le shell Render.
+Chaque `git push` sur `main` redéploie automatiquement les deux projets.
+Le site appelle l'API par son propre domaine (relais `/api`), le cookie admin reste donc « first-party ».
+
+Alternative : [`render.yaml`](render.yaml) décrit le même backend pour Render (migrations au déploiement).
 
 ### Base Neon
 Le projet est lié à Neon (`neon.ts`, branche `production`). `neon deploy` écrit les adresses dans

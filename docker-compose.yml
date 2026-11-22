@@ -1,0 +1,29 @@
+# PostgreSQL pour le DÉVELOPPEMENT LOCAL uniquement.
+# Démarrer : docker compose up -d      Arrêter : docker compose down
+# Les identifiants ci-dessous sont locaux et sans valeur ; la production aura les siens (phase 7).
+
+services:
+  db:
+    image: postgres:17
+    container_name: lepetitgrain-db
+    environment:
+      POSTGRES_USER: lpg
+      POSTGRES_PASSWORD: lpg_dev_password
+      POSTGRES_DB: lepetitgrain # base de développement
+      TZ: UTC # la base stocke en UTC ; conversion vers Africa/Casablanca dans l'application
+    ports:
+      - "5432:5432"
+    volumes:
+      # Les données survivent à l'arrêt du conteneur
+      - db_data:/var/lib/postgresql/data
+      # Script exécuté à la PREMIÈRE création : ajoute la base de test
+      - ./backend/docker/init-test-db.sql:/docker-entrypoint-initdb.d/init-test-db.sql:ro
+    healthcheck:
+      # Docker vérifie régulièrement que PostgreSQL accepte les connexions
+      test: ["CMD-SHELL", "pg_isready -U lpg -d lepetitgrain"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db_data:

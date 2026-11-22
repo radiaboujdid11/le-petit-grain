@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     environment: Literal["development", "test", "production"] = "development"
     # Seule origine autorisée à appeler l'API depuis un navigateur (CORS)
     frontend_origin: str = "http://localhost:3000"
+    # Adresse de la base PostgreSQL (format SQLAlchemy, pilote psycopg 3).
+    # Valeur par défaut = base locale de docker-compose.yml ; en production, fournie par .env
+    database_url: str = "postgresql+psycopg://lpg:lpg_dev_password@localhost:5432/lepetitgrain"
 
 
 @lru_cache  # le fichier .env n'est lu qu'une seule fois

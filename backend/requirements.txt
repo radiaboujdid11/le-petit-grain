@@ -7,6 +7,10 @@ uvicorn[standard]==0.54.0
 pydantic==2.14.4
 pydantic-settings==2.16.3
 
+# Base de données
+sqlalchemy==2.1.9
+psycopg[binary]==3.3.9  # pilote PostgreSQL
+
 # Tests
 pytest==9.2.0
 httpx2==2.16.2  # client HTTP utilisé par TestClient (remplace httpx, déprécié par Starlette)

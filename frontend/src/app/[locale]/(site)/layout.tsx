@@ -1,4 +1,3 @@
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
@@ -9,7 +8,6 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       {/* Éléments communs à toutes les pages (structure du skill) */}
-      <AnnouncementBar />
       <Header />
       {children}
       <Footer />

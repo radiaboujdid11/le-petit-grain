@@ -13,9 +13,10 @@ from app.database import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-# Adresse de la base : la même que l'application (variable DATABASE_URL / .env),
-# jamais écrite en dur dans alembic.ini
-config.set_main_option("sqlalchemy.url", get_settings().database_url)
+# Adresse de la base (variables DATABASE_URL / DATABASE_URL_UNPOOLED ou .env),
+# jamais écrite en dur dans alembic.ini. Sur Neon : la connexion DIRECTE, pas le pooler.
+# « % » doublé : alembic.ini est lu par configparser, pour qui « % » est spécial.
+config.set_main_option("sqlalchemy.url", get_settings().migration_database_url.replace("%", "%%"))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

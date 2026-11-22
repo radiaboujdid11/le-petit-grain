@@ -22,20 +22,36 @@ class Settings(BaseSettings):
     # Adresse de la base PostgreSQL (format SQLAlchemy, pilote psycopg 3).
     # Valeur par défaut = base locale de docker-compose.yml ; en production, fournie par .env
     database_url: str = "postgresql+psycopg://lpg:lpg_dev_password@localhost:5432/lepetitgrain"
+    # Neon : adresse DIRECTE (sans « -pooler »), utilisée seulement par Alembic pour les migrations.
+    # Le pooler de Neon (PgBouncer, mode transaction) ne garde pas l'état de session
+    # dont les migrations ont besoin. Absente en local : Alembic prend database_url.
+    database_url_unpooled: str | None = None
     # Limitation des requêtes (désactivée dans la plupart des tests)
     rate_limit_enabled: bool = True
     # Durée d'une session admin
     admin_session_days: int = 7
 
-    @field_validator("database_url")
+    @field_validator("database_url", "database_url_unpooled")
     @classmethod
-    def use_psycopg_driver(cls, url: str) -> str:
+    def use_psycopg_driver(cls, url: str | None) -> str | None:
         """Render / Neon fournissent « postgres://… » ou « postgresql://… » :
         on précise le pilote psycopg 3 attendu par SQLAlchemy."""
+        if url is None:
+            return None
         for prefix in ("postgres://", "postgresql://"):
             if url.startswith(prefix):
                 return "postgresql+psycopg://" + url[len(prefix):]
         return url
+
+    @property
+    def migration_database_url(self) -> str:
+        """Adresse utilisée par Alembic : la directe si elle existe (Neon), sinon la normale."""
+        return self.database_url_unpooled or self.database_url
+
+    @property
+    def uses_pgbouncer(self) -> bool:
+        """Vrai si l'application passe par le pooler de Neon (« -pooler » dans le nom d'hôte)."""
+        return "-pooler." in self.database_url
 
     @property
     def secure_cookies(self) -> bool:

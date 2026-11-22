@@ -129,6 +129,21 @@ cd frontend && npm test        # 53 tests
 
 Après le premier déploiement : lancer `seed_menu`, `seed_demo` et `create_admin` depuis le shell Render.
 
+### Base Neon
+Le projet est lié à Neon (`neon.ts`, branche `production`). `neon deploy` écrit les adresses dans
+`.env.local` à la racine (non commité) :
+- `DATABASE_URL` (pooled, « -pooler ») pour l'application : les *prepared statements* de psycopg
+  sont alors désactivés, car le pooler PgBouncer de Neon fonctionne en mode transaction ;
+- `DATABASE_URL_UNPOOLED` (connexion directe) pour les migrations Alembic.
+
+Pour utiliser Neon en local à la place de Docker :
+```powershell
+cd backend
+powershell -ExecutionPolicy Bypass -File scripts\neon.ps1 -Setup   # 1re fois : tables, menu, démo, admin
+powershell -ExecutionPolicy Bypass -File scripts\neon.ps1          # ensuite : l'API seule
+```
+Sur Render, renseigner les mêmes `DATABASE_URL` et `DATABASE_URL_UNPOOLED`.
+
 ---
 
 ## Crédits

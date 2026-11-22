@@ -16,6 +16,8 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: DATABASE_URL
-        sync: false # secret : à saisir dans le tableau de bord Render
+        sync: false # secret : adresse Neon « pooled » (avec -pooler), pour l'application
+      - key: DATABASE_URL_UNPOOLED
+        sync: false # secret : adresse Neon directe (sans -pooler), pour les migrations Alembic
       - key: FRONTEND_ORIGIN
         sync: false # ex. https://le-petit-grain.vercel.app

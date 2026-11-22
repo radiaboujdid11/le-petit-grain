@@ -15,7 +15,15 @@ from app.config import get_settings
 
 # pool_pre_ping : vérifie qu'une connexion est encore vivante avant de la réutiliser
 # (utile si la base redémarre, ou sur Render après une mise en veille)
-engine = create_engine(get_settings().database_url, pool_pre_ping=True)
+settings = get_settings()
+
+# Derrière le pooler de Neon (PgBouncer en mode transaction), deux requêtes successives
+# peuvent passer par deux connexions PostgreSQL différentes : on désactive donc les
+# « prepared statements » automatiques de psycopg 3 (prepare_threshold=None).
+# Les verrous SELECT … FOR UPDATE restent valables : ils vivent dans une transaction.
+connect_args = {"prepare_threshold": None} if settings.uses_pgbouncer else {}
+
+engine = create_engine(settings.database_url, pool_pre_ping=True, connect_args=connect_args)
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 

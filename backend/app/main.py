@@ -9,7 +9,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import health
+from app.core.errors import register_error_handlers
+from app.routers import health, menu
 
 settings = get_settings()
 
@@ -24,5 +25,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Erreurs au format { code, message } dans la langue du visiteur
+register_error_handlers(app)
+
 # Toutes les routes sont préfixées par /api/v1 (voir docs/ARCHITECTURE.md)
 app.include_router(health.router, prefix="/api/v1")
+app.include_router(menu.router, prefix="/api/v1")

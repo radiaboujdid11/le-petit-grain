@@ -13,12 +13,13 @@ from app.core.auth import close_session, open_session, require_admin
 from app.core.errors import AppError
 from app.core.rate_limit import login_limiter
 from app.core.security import verify_password
-from app.core.timezone import local_datetime, now_utc
+from app.core.timezone import local_datetime, now_utc, to_local
 from app.database import get_db
 from app.models import (
     ORDER_TRANSITIONS,
     AdminUser,
     Category,
+    Closure,
     ContactMessage,
     OpeningHours,
     Order,
@@ -39,7 +40,15 @@ from app.schemas.admin import (
     ReservationAdminOut,
     Stats,
 )
-from app.schemas.shop import AdminSettings, AdminSettingsIn, ContactOut, OpeningHoursOut, SettingsOut
+from app.schemas.shop import (
+    AdminSettings,
+    AdminSettingsIn,
+    ClosureIn,
+    ClosureOut,
+    ContactOut,
+    OpeningHoursOut,
+    SettingsOut,
+)
 from app.services.schedule import get_settings
 from app.services.stats import compute_stats
 
@@ -253,6 +262,37 @@ def write_settings(data: AdminSettingsIn, db: Session = Depends(get_db)):
         db.add(hours)
     db.commit()
     return _settings_out(db)
+
+
+# ------------------------------------------------------------------ Jours de fermeture
+
+@router.get("/closures", response_model=list[ClosureOut], dependencies=protected)
+def list_closures(db: Session = Depends(get_db)):
+    """Fermetures exceptionnelles à venir (et celles des 7 derniers jours, pour mémoire)."""
+    since = to_local(now_utc()).date() - timedelta(days=7)
+    return list(db.scalars(select(Closure).where(Closure.day >= since).order_by(Closure.day)))
+
+
+@router.put("/closures/{day}", response_model=ClosureOut, dependencies=protected)
+def set_closure(day: date, data: ClosureIn, db: Session = Depends(get_db)):
+    """Ferme la boutique ce jour-là (ou modifie le motif). Les réservations déjà prises
+    ce jour-là ne sont pas annulées automatiquement : l'admin les voit et prévient les clients."""
+    if data.day != day:
+        raise AppError("VALIDATION_ERROR", 422)
+    closure = db.get(Closure, day) or Closure(day=day)
+    closure.reason = data.reason
+    db.add(closure)
+    db.commit()
+    return closure
+
+
+@router.delete("/closures/{day}", status_code=status.HTTP_204_NO_CONTENT, dependencies=protected)
+def delete_closure(day: date, db: Session = Depends(get_db)):
+    closure = db.get(Closure, day)
+    if closure is None:
+        raise AppError("NOT_FOUND", 404)
+    db.delete(closure)
+    db.commit()
 
 
 # ------------------------------------------------------------------ Messages de contact

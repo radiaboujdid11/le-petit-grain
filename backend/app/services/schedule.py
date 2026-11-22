@@ -11,7 +11,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.timezone import local_datetime, to_local
-from app.models import OpeningHours, Order, Reservation, ShopSettings
+from app.models import Closure, OpeningHours, Order, Reservation, ShopSettings
 
 
 @dataclass
@@ -31,7 +31,10 @@ def get_settings(db: Session, lock: bool = False) -> ShopSettings:
 
 
 def opening_window(db: Session, day: date) -> tuple[datetime, datetime] | None:
-    """(ouverture, fermeture) en heure de Casablanca, ou None si la boutique est fermée."""
+    """(ouverture, fermeture) en heure de Casablanca, ou None si la boutique est fermée
+    (jour fermé chaque semaine, ou fermeture exceptionnelle ce jour-là)."""
+    if db.get(Closure, day) is not None:
+        return None
     hours = db.get(OpeningHours, day.weekday())
     if hours is None or hours.is_closed:
         return None

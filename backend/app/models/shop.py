@@ -1,8 +1,8 @@
-"""Réglages de la boutique : horaires d'ouverture et paramètres (une seule ligne)."""
+"""Réglages de la boutique : horaires d'ouverture, jours de fermeture et paramètres (une seule ligne)."""
 
-from datetime import time
+from datetime import date, time
 
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -18,6 +18,19 @@ class OpeningHours(Base):
     is_closed: Mapped[bool] = mapped_column(default=False, server_default="false")
     open_time: Mapped[time]
     close_time: Mapped[time]
+
+
+class Closure(Base):
+    """Jour de fermeture exceptionnelle (fête, congés, travaux…).
+
+    Ce jour-là, aucun créneau de retrait ni de réservation n'est proposé,
+    quels que soient les horaires habituels de la semaine.
+    """
+
+    __tablename__ = "closures"
+
+    day: Mapped[date] = mapped_column(primary_key=True)
+    reason: Mapped[str] = mapped_column(String(120), default="", server_default="")
 
 
 class ShopSettings(Base):

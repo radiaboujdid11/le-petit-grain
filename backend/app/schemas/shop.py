@@ -1,6 +1,6 @@
 """Informations publiques de la boutique, réglages et messages de contact."""
 
-from datetime import datetime, time
+from datetime import date, datetime, time
 from typing import Annotated
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
@@ -17,8 +17,18 @@ class OpeningHoursOut(BaseModel):
     close_time: time
 
 
+class ClosureIn(BaseModel):
+    day: date
+    reason: Annotated[str, StringConstraints(strip_whitespace=True, max_length=120)] = ""
+
+
+class ClosureOut(ClosureIn):
+    model_config = ConfigDict(from_attributes=True)
+
+
 class ShopInfo(BaseModel):
     hours: list[OpeningHoursOut]
+    closures: list[ClosureOut]  # fermetures exceptionnelles à venir
     max_party_size: int
     reservation_days_ahead: int
     pickup_days_ahead: int

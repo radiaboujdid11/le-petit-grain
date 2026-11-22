@@ -1,9 +1,11 @@
 "use client";
-// Réglages : capacité de la salle, durée des créneaux, retrait des commandes, horaires.
+// Réglages : capacité de la salle, durée des créneaux, retrait des commandes, horaires,
+// et jours de fermeture exceptionnelle.
 
 import { useState } from "react";
 import { refreshShopInfo } from "@/app/actions";
 import { AdminTitle } from "@/components/admin/AdminShell";
+import { ClosuresManager } from "@/components/admin/ClosuresManager";
 import { Button } from "@/components/ui/Button";
 import { FormError } from "@/components/ui/Field";
 import { apiRequest, ClientApiError } from "@/lib/client-api";
@@ -59,6 +61,7 @@ export default function AdminSettingsPage() {
   if (!data) return <p role="status" className="text-vanilla/70">Chargement…</p>;
 
   return (
+    <>
     <form onSubmit={submit}>
       <AdminTitle title="Réglages"><Button type="submit">Enregistrer</Button></AdminTitle>
       <FormError message={error} />
@@ -100,5 +103,9 @@ export default function AdminSettingsPage() {
         </section>
       </div>
     </form>
+
+    {/* Formulaire séparé (pas de formulaire dans un formulaire) */}
+    <ClosuresManager />
+    </>
   );
 }

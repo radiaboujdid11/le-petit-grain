@@ -256,6 +256,7 @@
     "address": "Address",
     "hours": "Opening hours",
     "closed": "Closed",
+    "closures": "Exceptional closures",
     "phone": "Phone",
     "email": "Email",
     "formTitle": "Write to us",

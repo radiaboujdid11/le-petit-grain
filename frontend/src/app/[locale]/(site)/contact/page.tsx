@@ -8,9 +8,12 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { shop } from "@/data/shop";
 import { apiFetch } from "@/lib/api";
-import type { Locale } from "@/lib/format";
+import { formatDay, type Locale } from "@/lib/format";
 
-type ShopInfo = { hours: { weekday: number; is_closed: boolean; open_time: string; close_time: string }[] };
+type ShopInfo = {
+  hours: { weekday: number; is_closed: boolean; open_time: string; close_time: string }[];
+  closures?: { day: string; reason: string }[]; // fermetures exceptionnelles à venir (API récente)
+};
 
 // Horaires réels (modifiables dans l'admin), mis en cache quelques minutes
 async function getShopInfo(locale: Locale) {
@@ -63,6 +66,21 @@ export default async function ContactPage() {
                 </div>
               ))}
             </dl>
+
+            {/* Fermetures exceptionnelles à venir (ajoutées dans l'admin, page Réglages) */}
+            {(info.closures ?? []).length > 0 && (
+              <>
+                <h3 className="mt-6 mb-2 text-[11px] uppercase tracking-[0.2em] text-toffee">{t("closures")}</h3>
+                <ul className="divide-y divide-caramel/30">
+                  {(info.closures ?? []).map((c) => (
+                    <li key={c.day} className="flex justify-between gap-4 py-2">
+                      <span className="capitalize text-vanilla/85">{formatDay(`${c.day}T12:00:00Z`, locale)}</span>
+                      <span className="text-cream">{c.reason || t("closed")}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </section>
 
           <section className="flex flex-col gap-3">

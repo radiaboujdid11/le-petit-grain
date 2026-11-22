@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Marcellus } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -6,6 +7,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 // Police unique du site (skill boutique-gourmande, style B : « Marcellus partout »).
@@ -22,10 +24,25 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// Titre et description de la page dans la langue courante (onglet, Google…)
+// Titre et description de la page dans la langue courante (onglet, Google…),
+// et aperçu quand on partage un lien (WhatsApp, Instagram, Facebook : Open Graph).
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await rootLocale();
   const t = await getTranslations("Metadata");
-  return { title: t("title"), description: t("description") };
+  return {
+    metadataBase: new URL(SITE_URL), // rend absolues les adresses des images de partage
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      type: "website",
+      siteName: "Le Petit Grain",
+      title: t("title"),
+      description: t("description"),
+      locale: locale === "en" ? "en_GB" : "fr_MA",
+      images: [{ url: "/images/og.jpg", width: 1200, height: 630, alt: "Le Petit Grain" }],
+    },
+    twitter: { card: "summary_large_image", images: ["/images/og.jpg"] },
+  };
 }
 
 export default async function LocaleLayout({ children }: LayoutProps<"/[locale]">) {
@@ -42,6 +59,8 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
           {/* Le panier est partagé par tout le site (header, menu, fiche produit…) */}
           <CartProvider>{children}</CartProvider>
         </NextIntlClientProvider>
+        {/* Statistiques de visites Vercel : sans cookie, pages vues et pays (à activer dans Vercel) */}
+        <Analytics />
       </body>
     </html>
   );

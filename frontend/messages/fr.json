@@ -36,6 +36,19 @@
     "title": "Nos best-sellers",
     "intro": "Les favoris de nos habitués, préparés chaque matin dans notre fournil."
   },
+  "Menu": {
+    "metaTitle": "Menu · Le Petit Grain",
+    "metaDescription": "Cafés, boissons fraîches, viennoiseries et pâtisseries maison, prix en dirhams.",
+    "eyebrow": "La carte",
+    "title": "Notre menu",
+    "subtitle": "Préparé chaque matin, servi avec le sourire.",
+    "photoAlt": "Cappuccinos et croissants sur une table en bois",
+    "bestseller": "Best-seller",
+    "vegetarian": "Végétarien",
+    "nuts": "Contient des fruits à coque",
+    "soldOut": "Épuisé aujourd'hui",
+    "legendTitle": "Légende"
+  },
   "Product": {
     "addToCart": "Ajouter {name} au panier"
   },
@@ -63,6 +76,13 @@
     "privacy": "Confidentialité",
     "terms": "Conditions de vente",
     "copyright": "© {year} Le Petit Grain · Marque fictive, projet portfolio · Photos à titre d'illustration"
+  },
+  "Error": {
+    "eyebrow": "Petit contretemps",
+    "title": "Notre comptoir fait une courte pause.",
+    "text": "Nous n'arrivons pas à afficher cette page pour le moment. Réessayez dans un instant : le café sera bientôt prêt.",
+    "retry": "Réessayer",
+    "home": "Retour à l'accueil"
   },
   "WhatsApp": {
     "label": "Nous écrire sur WhatsApp (nouvel onglet)"

@@ -36,6 +36,19 @@
     "title": "Our best-sellers",
     "intro": "Our regulars' favourites, baked every morning in our bakery."
   },
+  "Menu": {
+    "metaTitle": "Menu · Le Petit Grain",
+    "metaDescription": "Coffee, cold drinks, viennoiseries and house-made pastries, prices in dirhams.",
+    "eyebrow": "The menu",
+    "title": "Our menu",
+    "subtitle": "Made every morning, served with a smile.",
+    "photoAlt": "Cappuccinos and croissants on a wooden table",
+    "bestseller": "Best-seller",
+    "vegetarian": "Vegetarian",
+    "nuts": "Contains nuts",
+    "soldOut": "Sold out today",
+    "legendTitle": "Key"
+  },
   "Product": {
     "addToCart": "Add {name} to cart"
   },
@@ -63,6 +76,13 @@
     "privacy": "Privacy",
     "terms": "Terms of sale",
     "copyright": "© {year} Le Petit Grain · Fictional brand, portfolio project · Photos for illustration only"
+  },
+  "Error": {
+    "eyebrow": "A small hiccup",
+    "title": "Our counter is taking a short break.",
+    "text": "We can't display this page right now. Please try again in a moment: the coffee will be ready soon.",
+    "retry": "Try again",
+    "home": "Back to home"
   },
   "WhatsApp": {
     "label": "Message us on WhatsApp (new tab)"

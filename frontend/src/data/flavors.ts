@@ -9,6 +9,7 @@ export type Localized = Record<Locale, string>;
 
 export type Flavor = {
   id: string;
+  productSlug: string; // produit correspondant dans le menu (ajout au panier)
   name: Localized;
   tagline: Localized; // phrase courte sous le nom
   description: Localized; // pour la section détail
@@ -21,6 +22,7 @@ export type Flavor = {
 export const flavors: Flavor[] = [
   {
     id: "classic",
+    productSlug: "iced-latte",
     name: { fr: "Classique", en: "Classic" },
     tagline: { fr: "Espresso glacé, lait d'avoine", en: "Iced espresso, oat milk" },
     description: {
@@ -34,6 +36,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: "caramel",
+    productSlug: "iced-caramel-latte",
     name: { fr: "Caramel", en: "Caramel" },
     tagline: { fr: "Caramel au beurre salé, cuit maison", en: "House-made salted butter caramel" },
     description: {
@@ -47,6 +50,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: "vanilla",
+    productSlug: "latte-vanille",
     name: { fr: "Vanille", en: "Vanilla" },
     tagline: { fr: "Latte vanille, chantilly maison", en: "Vanilla latte, house whipped cream" },
     description: {
@@ -60,6 +64,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: "mocha",
+    productSlug: "iced-moka",
     name: { fr: "Moka", en: "Mocha" },
     tagline: { fr: "Chocolat noir et cacao en poudre", en: "Dark chocolate and cocoa powder" },
     description: {
@@ -73,6 +78,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: "cinnamon",
+    productSlug: "iced-cannelle",
     name: { fr: "Cannelle", en: "Cinnamon" },
     tagline: { fr: "Cannelle de Ceylan et cardamome", en: "Ceylon cinnamon and cardamom" },
     description: {
@@ -86,6 +92,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: "amlou",
+    productSlug: "chocolat-amlou",
     name: { fr: "Amlou", en: "Amlou" },
     tagline: { fr: "Chocolat chaud, amande, argan et miel", en: "Hot chocolate, almond, argan and honey" },
     description: {

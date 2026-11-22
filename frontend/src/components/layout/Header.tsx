@@ -2,9 +2,9 @@
 // Seules les parties interactives sont des Client Components :
 // HeaderShell (ombre au défilement), MobileMenu (tiroir), LanguageSwitcher (FR | EN).
 
-import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Logo } from "@/components/brand/Logo";
+import { CartButton } from "@/components/cart/CartButton";
 import { Button } from "@/components/ui/Button";
 import { Link } from "@/i18n/navigation";
 import { HeaderShell } from "./HeaderShell";
@@ -21,7 +21,6 @@ const linkClass =
 
 export function Header() {
   const t = useTranslations("Nav"); // textes de la section « Nav » de messages/fr.json ou en.json
-  const cartCount = 0; // branché au vrai panier en phase 4
 
   return (
     <HeaderShell>
@@ -45,17 +44,8 @@ export function Header() {
         <div className="flex items-center justify-self-end gap-3 lg:gap-5">
           <LanguageSwitcher className="hidden lg:flex" />
 
-          {/* Panier dans un cercle au trait, compteur en pastille */}
-          <Link
-            href="/cart"
-            aria-label={t("cart", { count: cartCount })}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full border border-caramel text-cream transition-colors duration-200 ease-brand hover:border-cream"
-          >
-            <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
-            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-cream text-[10px] font-medium text-cocoa">
-              {cartCount}
-            </span>
-          </Link>
+          {/* Panier : cercle au trait + compteur (Client Component, lit le panier) */}
+          <CartButton />
 
           <Button href="/reservation" variant="secondary" className="hidden md:inline-flex">
             {t("reserve")}

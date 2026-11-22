@@ -7,7 +7,7 @@ import { locale as rootLocale } from "next/root-params";
 import { Leaf, Nut } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { BeanIcon } from "@/components/brand/BeanIcon";
-import { MenuSection } from "@/components/menu/MenuSection";
+import { MenuBrowser } from "@/components/menu/MenuBrowser";
 import type { Locale } from "@/lib/format";
 import { getCategories, getProducts } from "@/lib/menu";
 
@@ -58,12 +58,8 @@ export default async function MenuPage() {
         </div>
       </header>
 
-      {/* 1 colonne sur mobile ; 2 colonnes dès 990px, comme le menu imprimé A4 */}
-      <div className="mx-auto max-w-md lg:max-w-none lg:columns-2 lg:gap-20">
-        {sections.map(({ category, products }) => (
-          <MenuSection key={category.slug} category={category} products={products} />
-        ))}
-      </div>
+      {/* Barre des catégories collante, filtres et sections (Client Component) */}
+      <MenuBrowser sections={sections} />
 
       {/* Légende des icônes */}
       <aside

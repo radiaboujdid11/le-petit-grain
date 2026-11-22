@@ -4,10 +4,7 @@ import { notFound } from "next/navigation";
 import { locale as rootLocale } from "next/root-params";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { CartProvider } from "@/components/cart/CartProvider";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -48,12 +45,8 @@ export default async function LocaleLayout({ children }: LayoutProps<"/[locale]"
       <body className="min-h-full flex flex-col">
         {/* Rend les traductions disponibles aussi dans les Client Components */}
         <NextIntlClientProvider>
-          {/* Éléments communs à toutes les pages (structure du skill) */}
-          <AnnouncementBar />
-          <Header />
-          {children}
-          <Footer />
-          <WhatsAppButton />
+          {/* Le panier est partagé par tout le site (header, menu, fiche produit…) */}
+          <CartProvider>{children}</CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

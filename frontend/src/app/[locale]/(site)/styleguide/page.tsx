@@ -31,10 +31,10 @@ const palette = [
 
 // Produits fictifs pour la démonstration (prix réalistes en dirhams)
 const sampleProducts = [
-  { category: "Croissants", name: "Croissant aux amandes", price: "22,00 DH" },
-  { category: "Croissants", name: "Pain au chocolat", price: "16,00 DH" },
-  { category: "Coffee", name: "Cappuccino", price: "28,00 DH" },
-  { category: "Brownies & Cookies", name: "Brownie noix de pécan", price: "25,00 DH" },
+  { slug: "croissant-amandes", category: "Croissants", name: "Croissant aux amandes", price: "22,00 DH" },
+  { slug: "pain-au-chocolat", category: "Croissants", name: "Pain au chocolat", price: "16,00 DH" },
+  { slug: "cappuccino", category: "Coffee", name: "Cappuccino", price: "28,00 DH" },
+  { slug: "brownie-fondant", category: "Brownies & Cookies", name: "Brownie fondant", price: "25,00 DH" },
 ];
 
 export default function Home() {

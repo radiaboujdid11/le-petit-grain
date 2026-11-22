@@ -1,53 +1,31 @@
-import { useLocale, useTranslations } from "next-intl";
+import { locale as rootLocale } from "next/root-params";
+import { getTranslations } from "next-intl/server";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import type { Locale } from "@/lib/format";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, type Locale } from "@/lib/format";
+import { getProducts } from "@/lib/menu";
 
-// Données d'exemple dans les deux langues : elles viendront de l'API à l'étape suivante.
-const bestSellers = [
-  {
-    category: { fr: "Croissants", en: "Croissants" },
-    name: { fr: "Croissant au chocolat", en: "Chocolate croissant" },
-    priceCents: 2200,
-    image: "/images/products/croissant-chocolat.webp",
-  },
-  {
-    category: { fr: "Pâtisserie", en: "Pâtisserie" },
-    name: { fr: "Fondant au chocolat", en: "Chocolate lava cake" },
-    priceCents: 3800,
-    image: "/images/products/fondant-chocolat.webp",
-  },
-  {
-    category: { fr: "Brownies & Cookies", en: "Brownies & Cookies" },
-    name: { fr: "Brownie fondant", en: "Fudgy brownie" },
-    priceCents: 2500,
-    image: "/images/products/brownie.webp",
-  },
-  {
-    category: { fr: "Pâtisserie", en: "Pâtisserie" },
-    name: { fr: "Cupcake mûre & cacao", en: "Blackberry cocoa cupcake" },
-    priceCents: 3000,
-    image: "/images/products/cupcake-mure.webp",
-  },
-];
-
-export function BestSellers() {
-  const t = useTranslations("BestSellers");
-  const locale = useLocale() as Locale;
+// Best-sellers de l'accueil : les produits marqués « best-seller » dans la base (via l'API).
+// Composant serveur ASYNCHRONE : il attend les données avant d'afficher la section.
+export async function BestSellers() {
+  const locale = (await rootLocale()) as Locale;
+  const t = await getTranslations("BestSellers");
+  const products = await getProducts(locale, { bestseller: true });
 
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-24 md:px-8">
       <SectionTitle intro={t("intro")}>{t("title")}</SectionTitle>
       {/* 2 colonnes mobile, 3 tablette, 4 ordinateur */}
       <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4">
-        {bestSellers.map((product) => (
+        {products.slice(0, 4).map((product) => (
           <ProductCard
-            key={product.image}
-            category={product.category[locale]}
-            name={product.name[locale]}
-            price={formatPrice(product.priceCents, locale)} // « 22,00 DH » ou « 22.00 MAD »
-            image={product.image}
+            key={product.slug}
+            slug={product.slug}
+            category={product.category.name}
+            name={product.name}
+            price={formatPrice(product.price_cents, locale)}
+            image={product.image_url}
+            available={product.is_available}
           />
         ))}
       </div>

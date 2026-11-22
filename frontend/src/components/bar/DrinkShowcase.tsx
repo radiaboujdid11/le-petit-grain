@@ -9,8 +9,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Pause, Play, Plus } from "lucide-react";
+import { Pause, Play } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { AddToCartButton } from "@/components/cart/AddToCartButton";
 import { flavors } from "@/data/flavors";
 import { formatPrice, type Locale } from "@/lib/format";
 
@@ -18,7 +19,6 @@ const INTERVAL_MS = 1500; // durée d'affichage de chaque boisson
 
 export function DrinkShowcase() {
   const t = useTranslations("DrinkBar");
-  const tProduct = useTranslations("Product");
   const locale = useLocale() as Locale; // « fr » ou « en »
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
@@ -124,13 +124,7 @@ export function DrinkShowcase() {
       {/* Prix + ajout au panier (branché au vrai panier en phase 4) */}
       <div className="mt-5 flex items-center gap-3">
         <span className="font-medium text-cream">{formatPrice(flavor.priceCents, locale)}</span>
-        <button
-          type="button"
-          aria-label={tProduct("addToCart", { name: flavor.name[locale] })}
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-cream text-cocoa transition duration-200 ease-brand hover:bg-vanilla active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
-        >
-          <Plus className="h-5 w-5" strokeWidth={1.5} />
-        </button>
+        <AddToCartButton slug={flavor.productSlug} name={flavor.name[locale]} />
       </div>
 
       {/* Choix des boissons (deviendra la roue de médaillons) + bouton pause */}

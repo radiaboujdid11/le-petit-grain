@@ -41,3 +41,9 @@ describe("flavors", () => {
     expect(flavor.priceCents + smallest).toBeGreaterThan(0);
   });
 });
+
+describe("lien avec le menu", () => {
+  it("chaque boisson pointe vers un produit du menu (slug au bon format)", () => {
+    for (const flavor of flavors) expect(flavor.productSlug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+  });
+});

@@ -28,7 +28,8 @@ export function Logo({ variant = "horizontal", className = "" }: LogoProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <BeanIcon className="h-7 w-7" />
-      <span className="font-serif text-lg uppercase tracking-[0.14em]">Le Petit Grain</span>
+      {/* whitespace-nowrap : le nom ne passe jamais sur deux lignes (téléphone) */}
+      <span className="font-serif text-base whitespace-nowrap uppercase tracking-[0.1em] sm:text-lg sm:tracking-[0.14em]">Le Petit Grain</span>
     </div>
   );
 }

@@ -9,6 +9,26 @@ table sans surréservation**, et **espace d'administration** avec tableau de bor
 
 ---
 
+## Aperçu
+
+![Accueil](docs/screenshots/accueil.webp)
+
+| Menu | Fiche produit |
+|---|---|
+| ![Menu](docs/screenshots/menu.webp) | ![Fiche produit](docs/screenshots/fiche-produit.webp) |
+
+| Réservation de table | Accueil sur téléphone |
+|---|---|
+| ![Réservation](docs/screenshots/reservation.webp) | <img src="docs/screenshots/accueil-mobile.webp" alt="Accueil sur téléphone" width="260"> |
+
+**Espace admin** : tableau de bord des ventes et commandes du jour.
+
+![Tableau de bord admin](docs/screenshots/admin-tableau-de-bord.webp)
+
+![Commandes du jour](docs/screenshots/admin-commandes.webp)
+
+---
+
 ## Fonctionnalités
 
 ### Site public (français / anglais)

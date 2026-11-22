@@ -41,7 +41,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <aside className="border-b border-caramel/40 lg:w-60 lg:border-r lg:border-b-0">
         <div className="flex items-center gap-2 px-5 py-5 text-cream">
           <BeanIcon className="h-6 w-6" />
-          <span className="font-serif text-xl">Le Petit Grain</span>
+          <span className="font-serif text-base whitespace-nowrap uppercase tracking-[0.12em]">Le Petit Grain</span>
         </div>
         <nav aria-label="Administration" className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:pb-0">
           {NAV.map(({ href, label, Icon }) => {

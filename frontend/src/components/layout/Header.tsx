@@ -47,9 +47,13 @@ export function Header() {
           {/* Panier : cercle au trait + compteur (Client Component, lit le panier) */}
           <CartButton />
 
-          <Button href="/reservation" variant="secondary" className="hidden md:inline-flex">
-            {t("reserve")}
-          </Button>
+          {/* Caché sur téléphone (le lien est dans le tiroir du menu).
+              Le conteneur porte « hidden » : sur le bouton, il serait écrasé par son inline-flex. */}
+          <div className="hidden md:block">
+            <Button href="/reservation" variant="secondary">
+              {t("reserve")}
+            </Button>
+          </div>
         </div>
       </div>
     </HeaderShell>

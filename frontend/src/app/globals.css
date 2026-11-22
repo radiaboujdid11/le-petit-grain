@@ -86,6 +86,12 @@ body {
   font-synthesis: none;
 }
 
+/* Un <fieldset> refuse par défaut de rétrécir (min-width: min-content) :
+   sans ceci, la rangée de dates de la réservation déborde au lieu de défiler. */
+fieldset {
+  min-width: 0;
+}
+
 /* Couleur de sélection du texte, assortie à la palette */
 ::selection {
   background-color: var(--color-cream);

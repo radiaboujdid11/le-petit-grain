@@ -24,9 +24,10 @@ const {
 
 export function Hero() {
   return (
-    // 100svh - 5rem : toute la hauteur de l'écran moins le header (80px).
+    // 100svh - 7rem : toute la hauteur de l'écran moins le header (5rem)
+    // et le bandeau d'annonce (~2rem).
     // svh = hauteur « petite » de l'écran : correcte sur mobile même avec la barre du navigateur.
-    <section className="relative flex h-[calc(100svh-5rem)] min-h-[520px] items-center justify-center overflow-hidden">
+    <section className="relative flex h-[calc(100svh-7rem)] min-h-[520px] items-center justify-center overflow-hidden">
       <picture>
         <source media="(min-width: 750px)" srcSet={desktopSrcSet} />
         <source srcSet={mobileSrcSet} />

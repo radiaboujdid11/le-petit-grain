@@ -7,6 +7,7 @@ from app.core.i18n import Locale, get_locale
 from app.core.rate_limit import form_limiter
 from app.core.timezone import now_utc
 from app.database import get_db
+from app.services import notifications
 from app.schemas.reservations import (
     ReservationCreate,
     ReservationCreated,
@@ -32,6 +33,7 @@ router = APIRouter(tags=["réservations"])
 def book_table(data: ReservationCreate, db: Session = Depends(get_db), locale: Locale = Depends(get_locale)):
     reservation, token = create_reservation(db, data, locale, now_utc())
     db.commit()
+    notifications.reservation_created(reservation, token)
     return ReservationCreated(**ReservationOut.from_model(reservation).model_dump(), manage_token=token)
 
 
@@ -45,6 +47,7 @@ def change_reservation(token: str, data: ReservationUpdate, db: Session = Depend
     reservation = find_by_token(db, token)
     update_reservation(db, reservation, data.start_at, data.party_size, now_utc())
     db.commit()
+    notifications.reservation_changed(reservation)
     return ReservationOut.from_model(reservation)
 
 
@@ -52,4 +55,5 @@ def change_reservation(token: str, data: ReservationUpdate, db: Session = Depend
 def cancel(token: str, db: Session = Depends(get_db)):
     reservation = cancel_reservation(db, find_by_token(db, token))
     db.commit()
+    notifications.reservation_changed(reservation, cancelled=True)
     return ReservationOut.from_model(reservation)

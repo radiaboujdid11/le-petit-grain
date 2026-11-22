@@ -13,6 +13,7 @@ from app.core.timezone import now_utc
 from app.database import get_db
 from app.models import Order
 from app.schemas.orders import OrderCreate, OrderOut
+from app.services import notifications
 from app.services.orders import create_order
 
 router = APIRouter(tags=["commandes"])
@@ -28,6 +29,7 @@ def place_order(data: OrderCreate, db: Session = Depends(get_db), locale: Locale
     order = create_order(db, data, locale, now_utc())
     db.commit()
     db.refresh(order)
+    notifications.order_created(order)  # après l'enregistrement : un e-mail raté n'annule rien
     return OrderOut.from_model(order, locale)
 
 

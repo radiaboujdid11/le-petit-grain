@@ -14,6 +14,7 @@ from app.database import get_db
 from app.models import Closure, ContactMessage, OpeningHours
 from app.schemas.orders import SlotOut
 from app.schemas.shop import ClosureOut, ContactIn, OpeningHoursOut, ShopInfo
+from app.services import notifications
 from app.services.schedule import get_settings, pickup_slots, reservation_slots
 
 router = APIRouter(tags=["boutique"])
@@ -63,4 +64,5 @@ def send_contact_message(
 ):
     db.add(ContactMessage(name=data.name, email=data.email, message=data.message, locale=locale))
     db.commit()
+    notifications.contact_received(data.name, data.email, data.message)
     return {"status": "received"}

@@ -26,6 +26,15 @@ class Settings(BaseSettings):
     # Le pooler de Neon (PgBouncer, mode transaction) ne garde pas l'état de session
     # dont les migrations ont besoin. Absente en local : Alembic prend database_url.
     database_url_unpooled: str | None = None
+    # E-mails (Resend). Sans clé, aucun e-mail n'est envoyé (développement, tests).
+    resend_api_key: str | None = None
+    # Adresse du café, prévenue à chaque commande, réservation et message
+    notify_email: str | None = None
+    # Expéditeur. « onboarding@resend.dev » fonctionne sans domaine, mais Resend n'envoie
+    # alors qu'à l'adresse du compte : d'où customer_emails désactivé par défaut.
+    email_from: str = "Le Petit Grain <onboarding@resend.dev>"
+    # Confirmations aux clients : à activer une fois un nom de domaine vérifié dans Resend
+    customer_emails: bool = False
     # Limitation des requêtes (désactivée dans la plupart des tests)
     rate_limit_enabled: bool = True
     # Durée d'une session admin

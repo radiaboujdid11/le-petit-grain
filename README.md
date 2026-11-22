@@ -126,7 +126,7 @@ cd frontend && npm test        # 53 tests
 | Service | Rôle |
 |---|---|
 | **Vercel** (projet 1, dossier `frontend/`) | le site Next.js ; variable `API_URL` = adresse du backend |
-| **Vercel** (projet 2, dossier `backend/`) | l'API FastAPI en fonction Python (point d'entrée [`backend/index.py`](backend/index.py)) ; variables `DATABASE_URL`, `ENVIRONMENT=production`, `FRONTEND_ORIGIN` |
+| **Vercel** (projet 2, dossier `backend/`) | l'API FastAPI en fonction Python (point d'entrée [`backend/index.py`](backend/index.py)) ; variables `DATABASE_URL`, `ENVIRONMENT=production`, `FRONTEND_ORIGIN` (adresse du site), `RESEND_API_KEY` et `NOTIFY_EMAIL` (e-mails) |
 | **Neon** | PostgreSQL gratuit et persistant |
 
 Chaque `git push` sur `main` redéploie automatiquement les deux projets.

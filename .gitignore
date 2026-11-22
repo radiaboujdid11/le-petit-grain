@@ -26,3 +26,6 @@ Thumbs.db
 # Skill de design local (cite des marques réelles : non publié)
 SKILL.md
 .neon
+
+# Dossier de build parasite à la racine (le vrai est frontend/.next)
+/.next/

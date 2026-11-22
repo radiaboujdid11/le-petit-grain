@@ -41,8 +41,12 @@ table sans surréservation**, et **espace d'administration** avec tableau de bor
 - **Panier** conservé dans le navigateur, **commande à emporter** avec choix du jour et du créneau
   de retrait, **paiement sur place**, page de confirmation avec numéro de commande et suivi du statut.
 - **Réservation de table** : date, nombre de personnes, créneau ; **lien unique** pour modifier ou annuler.
-- Pages **Notre histoire**, **Contact** (horaires, formulaire), pages légales, page 404, page d'erreur.
+- Pages **Notre histoire**, **Contact** (horaires et fermetures exceptionnelles venant de l'admin,
+  formulaire), pages légales, page 404, page d'erreur.
 - Langue du navigateur détectée automatiquement, bouton FR | EN, prix « 25,00 DH » / « 25.00 MAD ».
+- **Référencement et partage** : plan du site (`/sitemap.xml`, pages et produits dans les deux langues),
+  `robots.txt` (admin et pages personnelles exclues), aperçu photo quand on partage un lien
+  (WhatsApp, Instagram, Facebook), statistiques de visites Vercel Analytics (sans cookie).
 
 ### Espace admin (`/fr/admin`)
 - Connexion sécurisée (session dans un cookie httpOnly).
@@ -51,8 +55,16 @@ table sans surréservation**, et **espace d'administration** avec tableau de bor
 - **Commandes** du jour, changement de statut (*En attente → Confirmée → En préparation → Prête → Récupérée*, ou *Annulée*).
 - **Réservations** par jour, annulation, nombre de couverts.
 - **Menu** : création / modification des produits (FR et EN), prix, disponibilité, best-seller, catégories visibles.
-- **Réglages** : capacité de la salle, durée des créneaux, horaires d'ouverture.
+- **Réglages** : capacité de la salle, durée des créneaux, horaires d'ouverture, et **fermetures
+  exceptionnelles** (Aïd, congés…) : ce jour-là, aucun créneau de commande ni de réservation.
 - **Messages** du formulaire de contact.
+
+### Notifications par e-mail (Resend)
+- Le café est prévenu à **chaque commande**, **réservation** (créée, modifiée ou annulée par le client)
+  et **message de contact** ; « Répondre » écrit directement au client.
+- Confirmations aux clients (commande, réservation avec lien de gestion) : prêtes, activées avec
+  `CUSTOMER_EMAILS=true` une fois un nom de domaine vérifié dans Resend.
+- Un e-mail qui échoue ne fait **jamais** échouer la commande ou la réservation (testé).
 
 ---
 
@@ -62,8 +74,10 @@ table sans surréservation**, et **espace d'administration** avec tableau de bor
 |---|---|
 | Frontend | Next.js 16 (App Router, Cache Components) · React 19 · TypeScript · Tailwind CSS 4 · next-intl · Motion |
 | Backend | FastAPI · Pydantic 2 · SQLAlchemy 2 · Alembic |
-| Base de données | PostgreSQL 17 (Docker en local) |
-| Tests | pytest (72 tests backend) · Vitest (53 tests frontend) |
+| Base de données | PostgreSQL (Docker en local, Neon en production) |
+| E-mails | Resend (API HTTP) |
+| Hébergement | Vercel (site + API) · Neon (base) |
+| Tests | pytest (86 tests backend) · Vitest (53 tests frontend) |
 
 ### Points d'architecture
 - **Les prix sont toujours recalculés par le backend** : le navigateur n'envoie que des slugs et des quantités.
@@ -76,6 +90,7 @@ table sans surréservation**, et **espace d'administration** avec tableau de bor
 - **Erreurs claires dans les deux langues** : `{ "code": "SLOT_FULL", "message": "…" }`.
 - Limitation des tentatives sur la connexion admin et les formulaires, CORS limité au frontend.
 - Pages du menu **pré-rendues et mises en cache**, vidées à la demande quand l'admin modifie un produit.
+- **Textes des clients échappés** dans les e-mails (aucune injection de HTML possible, testé).
 
 Détails : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -100,7 +115,7 @@ pip install -r requirements.txt
 cp .env.example .env
 alembic upgrade head           # crée les tables
 python -m scripts.seed_menu    # 6 catégories, 25 produits
-python -m scripts.seed_demo    # ~3 mois de commandes et réservations fictives
+python -m scripts.seed_demo    # ~3 mois de commandes et réservations fictives (local uniquement)
 python -m scripts.create_admin admin@lepetitgrain.example   # crée le compte admin
 uvicorn app.main:app --reload  # http://localhost:8000/docs
 ```
@@ -115,7 +130,7 @@ npm run dev                    # http://localhost:3000
 
 ### Tests
 ```bash
-cd backend  && pytest          # 72 tests (base de test séparée)
+cd backend  && pytest          # 86 tests (base de test séparée)
 cd frontend && npm test        # 53 tests
 ```
 
@@ -131,6 +146,15 @@ cd frontend && npm test        # 53 tests
 
 Chaque `git push` sur `main` redéploie automatiquement les deux projets.
 Le site appelle l'API par son propre domaine (relais `/api`), le cookie admin reste donc « first-party ».
+Le site lit son adresse publique dans `VERCEL_PROJECT_PRODUCTION_URL` (ou `SITE_URL`, pour un futur nom de domaine).
+
+La base de production ne contient **aucune donnée de démo** : seulement le menu, les réglages
+et le compte admin. Les commandes et réservations sont celles des vrais clients.
+
+**Nouvelle migration en production** : faire passer `alembic upgrade head` par
+`DATABASE_URL_UNPOOLED`. Si le port 5432 est bloqué par le réseau, générer le SQL avec
+`alembic upgrade <avant>:<après> --sql` et l'exécuter dans l'éditeur SQL de Neon
+(avant de déployer le code qui utilise la nouvelle table).
 
 Alternative : [`render.yaml`](render.yaml) décrit le même backend pour Render (migrations au déploiement).
 
@@ -155,6 +179,6 @@ Sur Render, renseigner les mêmes `DATABASE_URL` et `DATABASE_URL_UNPOOLED`.
 
 - **Le Petit Grain est une marque fictive** créée pour un projet portfolio : aucune vente réelle,
   adresse, téléphone et e-mail fictifs.
-- Les visuels sont utilisés **à titre d'illustration** (en partie générés par IA). Avant toute
-  publication publique, ils doivent être remplacés par des images libres de droits ou générées pour le projet.
+- Les photos sont utilisées **à titre d'illustration**, sans usage commercial ; leurs droits
+  appartiennent à leurs auteurs. Elles seront retirées sur simple demande (ouvrir une *issue*).
 - Police : Marcellus (Google Fonts). Icônes : Lucide.

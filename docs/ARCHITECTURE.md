@@ -181,4 +181,9 @@ avec un verrou PostgreSQL, pour gérer deux demandes simultanées.
 | Cache du menu | `"use cache"` + `cacheTag("menu")`, vidé par une Server Action protégée (`updateTag`) |
 | Langue côté serveur | `next/root-params` (Next.js 16.3+) |
 | Paramètres de la boutique | table `shop_settings` (+ `reservation_days_ahead`, `pickup_days_ahead`) |
-| Hébergement de la base | Neon conseillé (persistant), backend sur Render via `render.yaml` |
+| Hébergement | Site ET API sur Vercel (API : fonction Python, `backend/index.py`), base sur Neon. Render écarté (carte bancaire exigée), `render.yaml` gardé en alternative |
+| Connexion à Neon | `DATABASE_URL` pooled pour l'API (*prepared statements* psycopg désactivés, PgBouncer en mode transaction), `DATABASE_URL_UNPOOLED` directe pour Alembic |
+| Fermetures exceptionnelles (décision K levée) | table `closures` (`day` clé primaire, `reason`) ; `opening_window` renvoie « fermé » ce jour-là ; routes `GET/PUT/DELETE /admin/closures[/{day}]` ; fermetures à venir dans `/shop/info` |
+| E-mails | Resend par HTTP (`app/services/notifications.py`), envoyés après le `commit`, erreurs journalisées sans bloquer ; café prévenu (`NOTIFY_EMAIL`), clients si `CUSTOMER_EMAILS=true` |
+| Référencement | `sitemap.ts`, `robots.ts`, Open Graph (`/images/og.jpg`, `metadataBase`), Vercel Analytics |
+| Données de production | aucune donnée de démo (supprimées le 22/11/2026) ; `seed_demo` réservé au local |

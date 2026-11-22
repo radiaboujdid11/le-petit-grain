@@ -1,0 +1,70 @@
+{
+  "Metadata": {
+    "title": "Le Petit Grain · Coffee shop & bakery",
+    "description": "Specialty coffee, viennoiseries and artisan pastries. A little moment of joy."
+  },
+  "Announcement": {
+    "text": "Click & collect · Order online, pay when you pick up in store"
+  },
+  "Nav": {
+    "menu": "Menu",
+    "about": "Our story",
+    "contact": "Contact",
+    "reserve": "Book",
+    "reserveTable": "Book a table",
+    "home": "Le Petit Grain, home",
+    "cart": "Cart ({count, plural, =0 {empty} one {# item} other {# items}})",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation"
+  },
+  "Language": {
+    "label": "Language",
+    "switchTo": "View the site in {language}",
+    "fr": "French",
+    "en": "English"
+  },
+  "Hero": {
+    "eyebrow": "Coffee · Bakery · Pâtisserie",
+    "title": "A little moment of joy.",
+    "subtitle": "Coffee, pastries & warmth.",
+    "seeMenu": "See the menu",
+    "reserve": "Book a table"
+  },
+  "BestSellers": {
+    "title": "Our best-sellers",
+    "intro": "Our regulars' favourites, baked every morning in our bakery."
+  },
+  "Product": {
+    "addToCart": "Add {name} to cart"
+  },
+  "DrinkBar": {
+    "title": "Choose your coffee",
+    "intro": "Iced or comforting, our drinks are made to order at the counter.",
+    "pause": "Pause the slideshow",
+    "play": "Resume the slideshow"
+  },
+  "Gallery": {
+    "title": "Gallery",
+    "intro": "A glimpse of our creations, from the counter to your table.",
+    "croissant": "Croissant filled with cream and crumble",
+    "espresso": "Espresso served in a dark cup",
+    "icedLatte": "Iced caramel latte"
+  },
+  "Footer": {
+    "findUs": "Find us",
+    "explore": "Explore",
+    "contact": "Contact",
+    "footerNav": "Footer",
+    "weekdays": "Monday – Friday",
+    "weekend": "Saturday – Sunday",
+    "legal": "Legal notice",
+    "privacy": "Privacy",
+    "terms": "Terms of sale",
+    "copyright": "© {year} Le Petit Grain · Fictional brand, portfolio project · Photos for illustration only"
+  },
+  "WhatsApp": {
+    "label": "Message us on WhatsApp (new tab)"
+  }
+}

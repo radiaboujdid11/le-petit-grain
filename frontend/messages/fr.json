@@ -1,0 +1,70 @@
+{
+  "Metadata": {
+    "title": "Le Petit Grain · Coffee shop & boulangerie",
+    "description": "Café de spécialité, viennoiseries et pâtisseries artisanales. A little moment of joy."
+  },
+  "Announcement": {
+    "text": "Click & collect · Commandez en ligne, payez au retrait en boutique"
+  },
+  "Nav": {
+    "menu": "Menu",
+    "about": "Notre histoire",
+    "contact": "Contact",
+    "reserve": "Réserver",
+    "reserveTable": "Réserver une table",
+    "home": "Le Petit Grain, accueil",
+    "cart": "Panier ({count, plural, =0 {aucun article} one {# article} other {# articles}})",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "mainNav": "Navigation principale",
+    "mobileNav": "Navigation mobile"
+  },
+  "Language": {
+    "label": "Langue",
+    "switchTo": "Afficher le site en {language}",
+    "fr": "français",
+    "en": "anglais"
+  },
+  "Hero": {
+    "eyebrow": "Coffee · Bakery · Pâtisserie",
+    "title": "A little moment of joy.",
+    "subtitle": "Coffee, pastries & warmth.",
+    "seeMenu": "Voir le menu",
+    "reserve": "Réserver une table"
+  },
+  "BestSellers": {
+    "title": "Nos best-sellers",
+    "intro": "Les favoris de nos habitués, préparés chaque matin dans notre fournil."
+  },
+  "Product": {
+    "addToCart": "Ajouter {name} au panier"
+  },
+  "DrinkBar": {
+    "title": "Choisissez votre café",
+    "intro": "Glacées ou réconfortantes, nos boissons sont préparées à la minute au comptoir.",
+    "pause": "Mettre le défilement en pause",
+    "play": "Reprendre le défilement"
+  },
+  "Gallery": {
+    "title": "Galerie",
+    "intro": "Un aperçu de nos créations, du comptoir à votre table.",
+    "croissant": "Croissant garni de crème et de crumble",
+    "espresso": "Espresso servi dans une tasse sombre",
+    "icedLatte": "Latte glacé au caramel"
+  },
+  "Footer": {
+    "findUs": "Nous trouver",
+    "explore": "Explorer",
+    "contact": "Contact",
+    "footerNav": "Pied de page",
+    "weekdays": "Lundi – Vendredi",
+    "weekend": "Samedi – Dimanche",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité",
+    "terms": "Conditions de vente",
+    "copyright": "© {year} Le Petit Grain · Marque fictive, projet portfolio · Photos à titre d'illustration"
+  },
+  "WhatsApp": {
+    "label": "Nous écrire sur WhatsApp (nouvel onglet)"
+  }
+}

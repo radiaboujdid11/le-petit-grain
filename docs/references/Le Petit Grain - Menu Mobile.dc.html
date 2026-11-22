@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#211710}
+a{color:#D7B98D}a:hover{color:#F2E6D5}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div style="min-height:100vh;background:#211710;color:#F2E6D5">
+<div style="max-width:440px;margin:0 auto">
+
+  <header style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:48px 24px 32px">
+    <svg width="52" height="52" viewBox="0 0 100 100" fill="none" stroke="#D7B98D" stroke-width="2.4" stroke-linecap="round"><g transform="rotate(30 50 50)"><ellipse cx="50" cy="50" rx="25" ry="37"></ellipse><path d="M50 13 C38 28 38 40 50 50 C62 60 62 72 50 87"></path></g></svg>
+    <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:42px;letter-spacing:.04em;line-height:1;color:#F2E6D5">Le Petit Grain</h1>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:#D7B98D">A little moment of joy.</div>
+    <div style="font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#B9824E">Coffee, pastries &amp; warmth.</div>
+  </header>
+
+  <sc-if value="{{ showPhotos }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;justify-content:center;padding:8px 0 40px">
+      <div style="position:relative;width:240px;height:320px">
+        <div style="position:absolute;inset:-9px -9px 0;border:1px solid #805333;border-bottom:none;border-radius:999px 999px 0 0"></div>
+        <div style="position:absolute;inset:0;border-radius:999px 999px 0 0;overflow:hidden;background:#493020"><image-slot id="m-hero" shape="rect" placeholder="Photo · comptoir, cafés"></image-slot></div>
+      </div>
+    </div>
+  </sc-if>
+
+  <nav style="position:sticky;top:0;z-index:5;background:#211710;border-bottom:1px solid #805333">
+    <div style="display:flex;gap:22px;overflow-x:auto;padding:0 24px;scrollbar-width:none">
+      <sc-for list="{{ sections }}" as="s" hint-placeholder-count="6">
+        <button onClick="{{ s.go }}" style="flex:none;background:none;border:none;cursor:pointer;padding:16px 0 13px;min-height:48px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;color:{{ s.navColor }};border-bottom:1px solid {{ s.navLine }};margin-bottom:-1px">{{ s.title }}</button>
+      </sc-for>
+    </div>
+  </nav>
+
+  <main style="padding:0 24px">
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="6">
+      <section id="{{ s.anchor }}" style="padding:52px 0 8px;scroll-margin-top:50px">
+        <h2 style="margin:0;text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;letter-spacing:.3em;text-transform:uppercase;color:#D7B98D">{{ s.title }}</h2>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 28px"><span style="width:48px;height:1px;background:#805333"></span><svg width="15" height="15" viewBox="0 0 100 100" fill="none" stroke="#B9824E" stroke-width="5"><g transform="rotate(30 50 50)"><ellipse cx="50" cy="50" rx="25" ry="37"></ellipse><path d="M50 13 C38 28 38 40 50 50 C62 60 62 72 50 87"></path></g></svg><span style="width:48px;height:1px;background:#805333"></span></div>
+        <sc-if value="{{ s.photo }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:center;margin:0 0 32px">
+            <div style="position:relative;width:150px;height:150px">
+              <div style="position:absolute;inset:-7px;border:1px solid #805333;border-radius:50%"></div>
+              <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#493020"><image-slot id="{{ s.slotId }}" shape="rect" placeholder="Photo"></image-slot></div>
+            </div>
+          </div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <sc-if value="{{ it.best }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#D7B98D"><svg width="9" height="9" viewBox="0 0 10 10" fill="#D7B98D"><path d="M5 0L6 4L10 5L6 6L5 10L4 6L0 5L4 4Z"></path></svg>{{ badgeLabel }}</span></sc-if>
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;line-height:1.15;color:#F2E6D5">{{ it.name }}</span>
+                <span style="flex:1;min-width:16px;border-bottom:1px solid #805333;transform:translateY(-5px)"></span>
+                <span style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:#D7B98D;white-space:nowrap">{{ it.price }}</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:8px">
+                <span style="font-family:'DM Sans',sans-serif;font-size:13.5px;line-height:1.5;color:#F2E6D5;text-wrap:pretty">{{ it.desc }}</span>
+                <span style="display:flex;gap:6px;margin-top:3px;flex:none">
+                  <sc-if value="{{ it.veg }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D7B98D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg></sc-if>
+                  <sc-if value="{{ it.nuts }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D7B98D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4V2"></path><path d="M5 10v4a7.004 7.004 0 0 0 5.277 6.787c.412.104.802.292 1.145.545l1.578 1.168 1.578-1.168a3.25 3.25 0 0 1 1.145-.545A7.004 7.004 0 0 0 19 14v-4"></path><path d="M12 4C8 4 4.5 6 4 8c-.243.97-.919 1.952-2 3 1.31-.082 1.972-.29 3-1 .54.92.982 1.356 2 2 1.452-.647 1.954-1.098 2.5-2 .595.995 1.151 1.427 2.5 2 1.31-.621 1.862-1.058 2.5-2 .629.977 1.162 1.423 2.5 2 1.209-.548 1.68-.967 2-2 1.032.916 1.683 1.157 3 1-1.297-1.036-1.758-2.03-2-3-.5-2-4-4-8-4Z"></path></svg></sc-if>
+                </span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+  </main>
+
+  <footer style="margin-top:56px;background:#493020;border-radius:50% 50% 0 0 / 56px 56px 0 0;padding:64px 24px 44px;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center">
+    <svg width="28" height="28" viewBox="0 0 100 100" fill="none" stroke="#D7B98D" stroke-width="3.5" stroke-linecap="round"><g transform="rotate(30 50 50)"><ellipse cx="50" cy="50" rx="25" ry="37"></ellipse><path d="M50 13 C38 28 38 40 50 50 C62 60 62 72 50 87"></path></g></svg>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px 20px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.06em;color:#F2E6D5">
+      <span style="display:inline-flex;gap:6px;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D7B98D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>Végétarien</span>
+      <span style="display:inline-flex;gap:6px;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D7B98D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4V2"></path><path d="M5 10v4a7.004 7.004 0 0 0 5.277 6.787c.412.104.802.292 1.145.545l1.578 1.168 1.578-1.168a3.25 3.25 0 0 1 1.145-.545A7.004 7.004 0 0 0 19 14v-4"></path><path d="M12 4C8 4 4.5 6 4 8c-.243.97-.919 1.952-2 3 1.31-.082 1.972-.29 3-1 .54.92.982 1.356 2 2 1.452-.647 1.954-1.098 2.5-2 .595.995 1.151 1.427 2.5 2 1.31-.621 1.862-1.058 2.5-2 .629.977 1.162 1.423 2.5 2 1.209-.548 1.68-.967 2-2 1.032.916 1.683 1.157 3 1-1.297-1.036-1.758-2.03-2-3-.5-2-4-4-8-4Z"></path></svg>Fruits à coque</span>
+      <span style="display:inline-flex;gap:6px;align-items:center"><svg width="10" height="10" viewBox="0 0 10 10" fill="#D7B98D"><path d="M5 0L6 4L10 5L6 6L5 10L4 6L0 5L4 4Z"></path></svg>{{ badgeLabel }}</span>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:#D7B98D">A little moment of joy.</div>
+    <div style="font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#F2E6D5">Casablanca</div>
+  </footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showPhotos&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;badgeLabel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Best-seller&quot;,&quot;Coup de cœur&quot;,&quot;Signature&quot;],&quot;default&quot;:&quot;Best-seller&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  static RAW = [
+    ['cafes', 'Cafés', [
+      ['Espresso', 15, 'Mélange maison, notes de cacao et de noisette.'],
+      ['Cappuccino', 28, 'Espresso, lait entier vapeur et mousse onctueuse.'],
+      ['Flat white', 32, 'Double ristretto et micro-mousse soyeuse.'],
+      ['Latte vanille', 35, 'Lait velouté, vanille de Madagascar.'],
+      ["Chocolat chaud à l'amlou", 40, "Chocolat noir, amlou et miel d'argan.", 'n'],
+    ]],
+    ['boissons', 'Boissons fraîches', [
+      ['Iced latte', 30, 'Double espresso sur lait froid et glaçons.'],
+      ['Iced latte caramel', 35, 'Caramel au beurre salé fait maison.'],
+      ['Iced moka', 38, 'Espresso, chocolat noir et lait glacé.'],
+      ['Iced latte cannelle', 35, 'Cannelle de Ceylan et touche de sucre roux.'],
+      ['Citronnade à la menthe', 25, "Citrons pressés, menthe fraîche, fleur d'oranger."],
+    ]],
+    ['boulangerie', 'Boulangerie', [
+      ['Baguette tradition', 6, 'Levain naturel, cuite chaque matin.', 'v'],
+      ['Pain de campagne', 22, 'Seigle et blé, fermentation longue, croûte épaisse.', 'v'],
+      ['Msemen', 8, 'Crêpe feuilletée marocaine, beurre et semoule fine.', 'v'],
+    ]],
+    ['croissants', 'Croissants', [
+      ['Pur beurre', 14, 'Feuilletage tourné à la main, beurre de baratte.', 'v'],
+      ['Pain au chocolat', 16, 'Deux barres de chocolat noir 64 %.', 'v'],
+      ['Aux amandes', 22, "Crème d'amande et amandes effilées grillées.", 'vn'],
+      ['Au chocolat', 22, 'Ganache au chocolat noir, éclats de cacao.', 'vb'],
+      ['Crème & crumble', 26, 'Crème pâtissière vanille, crumble au beurre doré.', 'v'],
+    ]],
+    ['cookies', 'Brownies & Cookies', [
+      ['Brownie fondant', 25, 'Chocolat noir 70 %, cœur fondant, fleur de sel.', 'vb'],
+      ['Cookie chocolat noisette', 18, 'Chocolat au lait, noisettes torréfiées.', 'vn'],
+      ['Cookie pistache', 20, 'Pistaches grillées, chocolat blanc caramélisé.', 'vn'],
+    ]],
+    ['patisserie', 'Pâtisserie', [
+      ['Fondant au chocolat', 38, 'Servi tiède, cœur coulant, crème fouettée.', 'vb'],
+      ['Cupcake mûre & cacao', 30, 'Biscuit cacao, crème montée à la mûre.', 'vb'],
+      ['Tarte au citron meringuée', 35, 'Crème citron beldi, meringue flambée.', 'v'],
+      ['Cornes de gazelle', 12, "Pâte d'amande parfumée à la fleur d'oranger.", 'vn'],
+    ]],
+  ];
+  state = { active: 'cafes' };
+  componentDidMount() {
+    this.onScroll = () => {
+      let cur = Component.RAW[0][0];
+      for (const [k] of Component.RAW) {
+        const el = document.getElementById('sec-' + k);
+        if (el && el.getBoundingClientRect().top <= 90) cur = k;
+      }
+      if (cur !== this.state.active) this.setState({ active: cur });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+  go(k) {
+    const el = document.getElementById('sec-' + k);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 50, behavior: 'smooth' });
+  }
+  renderVals() {
+    const showPhotos = this.props.showPhotos ?? true;
+    const photoKeys = ['boulangerie', 'croissants', 'patisserie'];
+    return {
+      showPhotos,
+      badgeLabel: this.props.badgeLabel ?? 'Best-seller',
+      sections: Component.RAW.map(([key, title, rows]) => {
+        const on = this.state.active === key;
+        return {
+          key, title, anchor: 'sec-' + key, slotId: 'm-' + key,
+          photo: showPhotos && photoKeys.includes(key),
+          navColor: on ? '#D7B98D' : '#F2E6D5',
+          navLine: on ? '#D7B98D' : 'transparent',
+          go: () => this.go(key),
+          items: rows.map(([name, p, desc, f = '']) => ({
+            name, desc, price: p + ',00 DH',
+            veg: f.includes('v'), nuts: f.includes('n'), best: f.includes('b'),
+          })),
+        };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

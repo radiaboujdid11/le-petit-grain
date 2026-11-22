@@ -1,5 +1,6 @@
 import { getImageProps } from "next/image";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { BeanIcon } from "@/components/brand/BeanIcon";
 import { Button } from "@/components/ui/Button";
 
@@ -23,6 +24,7 @@ const {
 } = getImageProps({ ...common, src: "/images/hero/hero-latte-mobile.webp", width: 736, height: 1308 });
 
 export function Hero() {
+  const t = useTranslations("Hero");
   return (
     // 100svh - 7rem : toute la hauteur de l'écran moins le header (5rem)
     // et le bandeau d'annonce (~2rem).
@@ -45,21 +47,21 @@ export function Hero() {
       <div className="relative px-4 text-center">
         <BeanIcon className="mx-auto h-10 w-10 animate-rise-in text-cream" />
         <p className="mt-6 animate-rise-in text-xs uppercase tracking-[0.3em] text-cream [animation-delay:100ms]">
-          Coffee · Bakery · Pâtisserie
+          {t("eyebrow")}
         </p>
         <h1 className="mt-5 animate-rise-in font-serif text-5xl leading-tight font-medium text-vanilla [animation-delay:200ms] sm:text-7xl">
-          A little moment of joy.
+          {t("title")}
         </h1>
         {/* Slogan très espacé (skill : letter-spacing 4px) */}
         <p className="mt-5 animate-rise-in text-sm tracking-[4px] text-vanilla/90 uppercase [animation-delay:300ms]">
-          Coffee, pastries &amp; warmth.
+          {t("subtitle")}
         </p>
         <div className="mt-10 flex animate-rise-in flex-col items-center justify-center gap-4 [animation-delay:450ms] sm:flex-row">
           <Button href="/menu" size="lg">
-            Voir le menu <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+            {t("seeMenu")} <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
           </Button>
           <Button href="/reservation" variant="secondary" size="lg">
-            Réserver une table
+            {t("reserve")}
           </Button>
         </div>
       </div>

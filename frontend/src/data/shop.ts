@@ -12,9 +12,10 @@ export const shop = {
     { label: "Instagram", href: "https://instagram.com" },
     { label: "TikTok", href: "https://tiktok.com" },
   ],
-  // Horaires d'ouverture (heure de Casablanca)
+  // Horaires d'ouverture (heure de Casablanca).
+  // « daysKey » renvoie au texte traduit (messages/*.json, section « Footer »).
   hours: [
-    { days: "Lundi – Vendredi", open: "07:30", close: "20:00" },
-    { days: "Samedi – Dimanche", open: "08:00", close: "21:00" },
+    { daysKey: "weekdays", open: "07:30", close: "20:00" },
+    { daysKey: "weekend", open: "08:00", close: "21:00" },
   ],
-};
+} as const;

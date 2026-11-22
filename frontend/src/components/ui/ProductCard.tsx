@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Croissant, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // Carte produit (skill, adaptée « sans boîtes ») :
 // - image en arche, zoom doux au survol (600 ms) ;
@@ -14,6 +15,7 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ category, name, price, image }: ProductCardProps) {
+  const t = useTranslations("Product");
   // Zoom doux au survol, commun à la photo et à l'icône de remplacement
   const zoom = "transition-transform duration-600 ease-brand group-hover:scale-[1.06]";
 
@@ -40,7 +42,7 @@ export function ProductCard({ category, name, price, image }: ProductCardProps) 
             ou quand on arrive dessus au clavier (focus-within). */}
         <button
           type="button"
-          aria-label={`Ajouter ${name} au panier`}
+          aria-label={t("addToCart", { name })}
           className="absolute bottom-3 flex h-11 w-11 items-center justify-center rounded-full bg-cream text-cocoa transition duration-300 ease-brand hover:bg-vanilla focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream lg:translate-y-2 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100"
         >
           <Plus className="h-5 w-5" strokeWidth={1.5} />

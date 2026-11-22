@@ -1,12 +1,14 @@
 // Server Component : le contenu du header est rendu sur le serveur.
 // Seules les parties interactives sont des Client Components :
-// HeaderShell (ombre au défilement) et MobileMenu (tiroir).
+// HeaderShell (ombre au défilement), MobileMenu (tiroir), LanguageSwitcher (FR | EN).
 
-import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/Button";
+import { Link } from "@/i18n/navigation";
 import { HeaderShell } from "./HeaderShell";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
 import { navLinks } from "./nav-links";
 
@@ -18,6 +20,9 @@ const linkClass =
   "after:transition-all after:duration-300 after:ease-brand hover:after:w-full";
 
 export function Header() {
+  const t = useTranslations("Nav"); // textes de la section « Nav » de messages/fr.json ou en.json
+  const cartCount = 0; // branché au vrai panier en phase 4
+
   return (
     <HeaderShell>
       {/* Mobile : grille à 3 colonnes [menu | logo centré | panier].
@@ -25,40 +30,35 @@ export function Header() {
       <div className="mx-auto grid h-20 max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-4 md:flex md:justify-between md:px-8">
         <MobileMenu />
 
-        <Link href="/" aria-label="Le Petit Grain — accueil" className="text-cream">
+        <Link href="/" aria-label={t("home")} className="text-cream">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex lg:gap-10" aria-label="Navigation principale">
+        <nav className="hidden items-center gap-6 md:flex lg:gap-10" aria-label={t("mainNav")}>
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} className={linkClass}>
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center justify-self-end gap-3 lg:gap-5">
-          {/* Langue : affichage seulement pour l'instant, fonctionnel avec la traduction */}
-          <div className="hidden text-xs tracking-[0.2em] lg:block">
-            <span className="text-cream">FR</span>
-            <span className="mx-1.5 text-caramel">|</span>
-            <span className="text-vanilla/60">EN</span>
-          </div>
+          <LanguageSwitcher className="hidden lg:flex" />
 
           {/* Panier dans un cercle au trait, compteur en pastille */}
           <Link
             href="/cart"
-            aria-label="Panier (0 article)"
+            aria-label={t("cart", { count: cartCount })}
             className="relative flex h-11 w-11 items-center justify-center rounded-full border border-caramel text-cream transition-colors duration-200 ease-brand hover:border-cream"
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
             <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-cream text-[10px] font-medium text-cocoa">
-              0
+              {cartCount}
             </span>
           </Link>
 
           <Button href="/reservation" variant="secondary" className="hidden md:inline-flex">
-            Réserver
+            {t("reserve")}
           </Button>
         </div>
       </div>

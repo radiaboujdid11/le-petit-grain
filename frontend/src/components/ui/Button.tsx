@@ -1,4 +1,5 @@
-import Link from "next/link";
+// Link multilingue : href="/menu" → /fr/menu ou /en/menu selon la langue courante
+import { Link } from "@/i18n/navigation";
 
 // Bouton du design system.
 // - Avec « href » : c'est un lien (navigation vers une autre page) → <Link>

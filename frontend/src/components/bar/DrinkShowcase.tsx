@@ -10,12 +10,16 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Pause, Play, Plus } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { flavors } from "@/data/flavors";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, type Locale } from "@/lib/format";
 
 const INTERVAL_MS = 1500; // durée d'affichage de chaque boisson
 
 export function DrinkShowcase() {
+  const t = useTranslations("DrinkBar");
+  const tProduct = useTranslations("Product");
+  const locale = useLocale() as Locale; // « fr » ou « en »
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [userPaused, setUserPaused] = useState(false); // bouton pause / clic
@@ -76,7 +80,7 @@ export function DrinkShowcase() {
           >
             <Image
               src={f.image}
-              alt={f.name.fr}
+              alt={f.name[locale]}
               fill
               sizes="(min-width: 750px) 360px, 78vw"
               quality={90}
@@ -111,18 +115,18 @@ export function DrinkShowcase() {
             exit={{ x: "-70%", opacity: 0 }}
             transition={{ duration: 0.6, ease: [0, 0, 0.3, 1] }}
           >
-            {flavor.name.fr}
+            {flavor.name[locale]}
           </motion.h3>
         </AnimatePresence>
       </div>
-      <p className="mt-2 text-center text-sm text-vanilla/80">{flavor.tagline.fr}</p>
+      <p className="mt-2 text-center text-sm text-vanilla/80">{flavor.tagline[locale]}</p>
 
       {/* Prix + ajout au panier (branché au vrai panier en phase 4) */}
       <div className="mt-5 flex items-center gap-3">
-        <span className="font-medium text-cream">{formatPrice(flavor.priceCents, "fr")}</span>
+        <span className="font-medium text-cream">{formatPrice(flavor.priceCents, locale)}</span>
         <button
           type="button"
-          aria-label={`Ajouter ${flavor.name.fr} au panier`}
+          aria-label={tProduct("addToCart", { name: flavor.name[locale] })}
           className="flex h-11 w-11 items-center justify-center rounded-full bg-cream text-cocoa transition duration-200 ease-brand hover:bg-vanilla active:scale-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
         >
           <Plus className="h-5 w-5" strokeWidth={1.5} />
@@ -141,13 +145,13 @@ export function DrinkShowcase() {
               i === index ? "border-cream bg-cream text-cocoa" : "border-caramel text-vanilla/80 hover:border-cream"
             }`}
           >
-            {f.name.fr}
+            {f.name[locale]}
           </button>
         ))}
         <button
           type="button"
           onClick={() => setUserPaused(!userPaused)}
-          aria-label={userPaused ? "Reprendre le défilement" : "Mettre le défilement en pause"}
+          aria-label={userPaused ? t("play") : t("pause")}
           className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-caramel text-cream transition-colors duration-200 hover:border-cream focus-visible:outline-2 focus-visible:outline-cream"
         >
           {userPaused ? <Play className="h-4 w-4" strokeWidth={1.5} /> : <Pause className="h-4 w-4" strokeWidth={1.5} />}

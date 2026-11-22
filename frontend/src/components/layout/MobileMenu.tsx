@@ -3,12 +3,15 @@
 // Skill : sur mobile, un tiroir latéral qui glisse depuis la gauche en 300 ms.
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { BeanIcon } from "@/components/brand/BeanIcon";
+import { Link } from "@/i18n/navigation";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { navLinks } from "./nav-links";
 
 export function MobileMenu() {
+  const t = useTranslations("Nav");
   // useState : variable « surveillée » ; setIsOpen redessine le composant
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +38,7 @@ export function MobileMenu() {
         onClick={() => setIsOpen(true)}
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
-        aria-label="Ouvrir le menu"
+        aria-label={t("openMenu")}
         className="flex h-11 w-11 items-center justify-center rounded-full text-cream focus-visible:outline-2 focus-visible:outline-cream"
       >
         <Menu className="h-6 w-6" strokeWidth={1.5} />
@@ -53,7 +56,7 @@ export function MobileMenu() {
       {/* Tiroir : hors écran à gauche (-translate-x-full) quand il est fermé */}
       <nav
         id="mobile-menu"
-        aria-label="Navigation mobile"
+        aria-label={t("mobileNav")}
         aria-hidden={!isOpen}
         className={`fixed inset-y-0 left-0 z-50 flex w-[85%] max-w-sm flex-col border-r border-caramel/40 bg-cocoa px-8 pt-6 pb-10 transition-transform duration-300 ease-brand ${
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -63,7 +66,7 @@ export function MobileMenu() {
           type="button"
           onClick={close}
           tabIndex={isOpen ? 0 : -1}
-          aria-label="Fermer le menu"
+          aria-label={t("closeMenu")}
           className="flex h-11 w-11 items-center justify-center self-end rounded-full text-cream focus-visible:outline-2 focus-visible:outline-cream"
         >
           <X className="h-6 w-6" strokeWidth={1.5} />
@@ -78,7 +81,7 @@ export function MobileMenu() {
               tabIndex={isOpen ? 0 : -1}
               className="font-serif text-3xl uppercase tracking-[0.08em] text-vanilla transition-colors duration-200 hover:text-cream"
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
         </div>
@@ -96,15 +99,11 @@ export function MobileMenu() {
           tabIndex={isOpen ? 0 : -1}
           className="text-xs uppercase tracking-[0.25em] text-toffee hover:text-cream"
         >
-          Réserver une table
+          {t("reserveTable")}
         </Link>
 
         {/* Langue, en bas du tiroir */}
-        <div className="mt-auto text-xs tracking-[0.2em]">
-          <span className="text-cream">FR</span>
-          <span className="mx-1.5 text-caramel">|</span>
-          <span className="text-vanilla/60">EN</span>
-        </div>
+        <LanguageSwitcher className="mt-auto" />
       </nav>
     </div>
   );

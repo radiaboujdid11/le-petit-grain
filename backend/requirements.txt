@@ -10,6 +10,7 @@ pydantic-settings==2.16.3
 # Base de données
 sqlalchemy==2.1.9
 psycopg[binary]==3.3.9  # pilote PostgreSQL
+alembic==1.20.1  # migrations (historique de la structure de la base)
 
 # Tests
 pytest==9.2.0

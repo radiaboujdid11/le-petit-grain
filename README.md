@@ -117,4 +117,4 @@ Après le premier déploiement : lancer `seed_menu`, `seed_demo` et `create_admi
   adresse, téléphone et e-mail fictifs.
 - Les visuels sont utilisés **à titre d'illustration** (en partie générés par IA). Avant toute
   publication publique, ils doivent être remplacés par des images libres de droits ou générées pour le projet.
-- Polices : Cormorant Garamond et DM Sans (Google Fonts). Icônes : Lucide.
+- Police : Marcellus (Google Fonts). Icônes : Lucide.
